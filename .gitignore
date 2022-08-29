@@ -60,3 +60,4 @@ buck-out/
 
 #expo
 .expo
+.expo-shared
