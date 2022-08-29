@@ -61,8 +61,8 @@ export default function MainContainer() {
         {/* if adding a new page, lastly add another <Tab.Screen />
             the order of the <Tab.Screen /> components determines the order in the app*/}
         <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={calendarName} component={CalendarScreen} />
         <Tab.Screen name={recipeName} component={RecipeScreen} />
+        <Tab.Screen name={calendarName} component={CalendarScreen} />
         <Tab.Screen name={peopleName} component={PeopleScreen} />
         <Tab.Screen name={settingsName} component={SettingsScreen} />
       </Tab.Navigator>
