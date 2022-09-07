@@ -12,6 +12,7 @@ import CalendarScreen from "./screens/CalendarScreen";
 import RecipeScreen from "./screens/RecipeScreen";
 import PeopleScreen from "./screens/PeopleScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 // Screen names
 // - then declare a name for the label
@@ -19,6 +20,7 @@ const homeName = "Home";
 const calendarName = "Calendar";
 const recipeName = "Recipes";
 const peopleName = "People";
+const profileName = "Profile";
 const settingsName = "Settings";
 
 const Tab = createBottomTabNavigator();
@@ -45,6 +47,8 @@ export default function MainContainer() {
               iconName = focused ? "nutrition" : "nutrition-outline";
             } else if (routeName === peopleName) {
               iconName = focused ? "people" : "people-outline";
+            } else if (routeName == profileName) {
+              iconName = focused ? "person" : "person-outline";
             } else if (routeName === settingsName) {
               iconName = focused ? "settings" : "settings-outline";
             }
@@ -64,6 +68,7 @@ export default function MainContainer() {
         <Tab.Screen name={calendarName} component={CalendarScreen} />
         <Tab.Screen name={recipeName} component={RecipeScreen} />
         <Tab.Screen name={peopleName} component={PeopleScreen} />
+        <Tab.Screen name={profileName} component={ProfileScreen} />
         <Tab.Screen name={settingsName} component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
