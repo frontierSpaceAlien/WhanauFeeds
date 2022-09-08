@@ -400,5 +400,5 @@ export const Contact = [
       lastName: "Hurley",
     },
   ];
-  
-  export default Contact;
+
+export default Contact;

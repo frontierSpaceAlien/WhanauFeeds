@@ -1,26 +1,58 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacityBase } from "react-native";
+import { View, Text, StyleSheet, Pressable, TouchableOpacity } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {Contact}  from "../../FriendList/data/friends";
+import UserAvatar from 'react-native-user-avatar';
+import { FloatingAction } from "react-native-floating-action";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 export default function FriendScreen({ navigation }) {
+
   return (
-    <FlashList
+    <React.Fragment>
+    <View style = {styles.FriendCard}>
+      <FlashList
       data={Contact}
       renderItem={({ item }) => (
-          <View style = {styles.FriendCard}>
-            <Text>
-              {item.firstName} {item.lastName}
-            </Text>
-          </View>
-      )}
-      contentContainerStyle ={{backgroundColor: 'white'}}
-      estimatedItemSize={200}
-    />
+            <TouchableOpacity>
+              <Text>
+              <View style = {styles.avatarBox}>
+                <UserAvatar 
+                size = {32} 
+                name = {item.firstName +" "+ item.lastName}
+                />            
+              </View>
+                <View>
+                    <Text style = {styles.nameBox}>
+                      {item.firstName +" "+ item.lastName}
+                    </Text>
+                </View>
+              </Text>
+            </TouchableOpacity>
+        )}
+        contentContainerStyle ={{backgroundColor: 'white'}}
+        estimatedItemSize={200}
+        />
+        <FloatingAction
+          actions={actions}
+          color = 'tomato'
+          overlayColor="transparent"
+          />
+    </View>
+    </React.Fragment>
   );
 };
+
+const actions = [
+  {
+    text: "Add Friend",
+    name: "bt_friend",
+    color : 'tomato',
+    icon: <Ionicons name = 'ios-person-add-outline'/>,
+    position: 1
+  }
+]
 
 const styles = StyleSheet.create({
   background: {
@@ -33,7 +65,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor : "white",
     paddingHorizontal : 10,
-    paddingVertical : 20,
     fontWeight : "bold"
+  },
+  nameBox: {
+    paddingLeft : 10,
+    paddingBottom: 7
+  },
+  avatarBox : {
+    alignContent : 'center',
+    paddingTop: 10
   }
 });
