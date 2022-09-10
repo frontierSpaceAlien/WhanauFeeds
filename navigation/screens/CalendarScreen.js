@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, StatusBar, SafeAreaView, Text } from "react-native";
+import { Calendar } from 'react-native-calendario';
 
 export default function CalendarScreen({ navigation }) {
   return (
