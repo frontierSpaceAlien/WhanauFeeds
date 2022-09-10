@@ -1,123 +1,75 @@
-import React, {useState} from "react";
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert, Button } from "react-native";
+import React, { useState} from "react";
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from "react-native";
 import UserAvatar from 'react-native-user-avatar';
 import { FloatingAction } from "react-native-floating-action";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Contact from "../../FriendList/dummy_data/friends";
+import { useFocusEffect } from "@react-navigation/native";
+
+var saveID = ""
+var first_Name = ""
+var last_Name = ""
 
 export default function FriendScreen({ navigation }) {  
-  const [Contact, setContact] = useState([
-    {
-      id : 1,
-      firstName: "Illana",
-      lastName: "Torres",
-    },
-    {
-      id : 2,
-      firstName: "Rogan",
-      lastName: "Mcleod",
-    },
-    {
-      id : 3,
-      firstName: "Joy",
-      lastName: "Blackwell",
-    },
-    {
-      id : 4,
-      firstName: "Brent",
-      lastName: "Frazier",
-    },
-    {
-      id : 5,
-      firstName: "Cathleen",
-      lastName: "Holloway",
-    },
-    {
-      id : 6,
-      firstName: "Ashton",
-      lastName: "Bean",
-    },
-    {
-      id : 7,
-      firstName: "Brianna",
-      lastName: "Knox",
-    },
-    {
-      id : 8,
-      firstName: "Shafira",
-      lastName: "Hester",
-    },
-    {
-      id : 9,
-      firstName: "Eric",
-      lastName: "Blanchard",
-    },
-    {
-      id : 10,
-      firstName: "Brenda",
-      lastName: "Charles",
-    },
-    {
-      id : 11,
-      firstName: "Malachi",
-      lastName: "Blankenship",
-    },
-    {
-      id : 12,
-      firstName: "Jillian",
-      lastName: "Burt",
-    },
-    {
-      id : 13,
-      firstName: "Elton",
-      lastName: "Harris",
-    },
-    {
-      id : 14,
-      firstName: "Brody",
-      lastName: "Lyons",
-    },
-  ]);
-
-// Need a database to make deleting friends permanent
-// currently the array is only stored temporarily into memory at runtime
-// will reset upon recompiling
+  const [contactState, setContact] = useState(Contact);
+  
+  // Need a database to make deleting friends permanent
+  // currently the array is only stored temporarily into memory at runtime
+  // will reset upon recompiling
   const removeItem = id => {
-    const filteredData = Contact.filter(item => item.id !== id);
+    const filteredData = contactState.filter(item => item.id !== id);
     setContact(filteredData);
   }
-
+  
   const addItem = () => {
-    var arr = [...Contact , {id: 15, firstName: "Josh", lastName: "Smith"}];
+    var arr = [...contactState, {id: saveID, firstName: first_Name, lastName: last_Name}]
     setContact(arr);
   }
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if ( saveID == '' || first_Name == '' || last_Name == ''){
+        // do nothing
+        // probably remove console.log if it gets too annoying in terminal
+        console.log("No data in form")
+      }else{
+        addItem()
+        saveID = ''
+        first_Name = ''
+        last_Name = ''
+      }
+    })
+  )
+  
   return (
     <React.Fragment>
     <View style = {styles.FriendCard}>
       <FlatList
-      data={Contact}
+      keyExtractor={(item) => item.id}
+      data={contactState}
+      extraData={contactState}
       renderItem={({ item }) => (
-            <TouchableOpacity
-              onLongPress={() => {
-                Alert.alert(
-                  "Confirm",
-                  "Are you sure you want to delete this friend?",
-                  [
-                    {
-                      text: "Yes",
-                      onPress: () => removeItem(item.id),
-                      style: "default",
-                    },
-                    {
-                      text: "Cancel",
-                      style: "cancel",
-                    },
-                  ],
-                  {
-                    cancelable: true
-                  }
-                )
-              }}>
+        <TouchableOpacity
+        onLongPress={() => {
+          Alert.alert(
+            "Confirm",
+            "Are you sure you want to delete this friend?",
+            [
+              {
+                text: "Yes",
+                onPress: () => removeItem(item.id),
+                style: "default",
+              },
+              {
+                text: "Cancel",
+                style: "cancel",
+              },
+            ],
+              {
+                cancelable: true
+              }
+              )
+            }}>
               <Text>
               <View style = {styles.avatarBox}>
                 <UserAvatar 
@@ -127,7 +79,7 @@ export default function FriendScreen({ navigation }) {
               </View>
                 <View>
                     <Text style = {styles.nameBox}>
-                      {item.firstName +" "+ item.lastName}
+                      {item.firstName +" "+ item.lastName}      
                     </Text>
                 </View>
               </Text>
@@ -147,6 +99,12 @@ export default function FriendScreen({ navigation }) {
     </React.Fragment>
   );
 };
+
+export function saveData(id, firstName, lastName) {
+  saveID = id 
+  first_Name = firstName
+  last_Name = lastName
+}
 
 
 const actions = [
@@ -180,29 +138,4 @@ const styles = StyleSheet.create({
     alignContent : 'center',
     paddingTop: 10
   },
-  centeredView:{
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center"
-  }
 });

@@ -34,6 +34,7 @@ export default function MainContainer() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+// the code breaks if you remove 'name = ...'
           name = "DO NOT DELETE"
           component={BottomNav}
           options = {{
