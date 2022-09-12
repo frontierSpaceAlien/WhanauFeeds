@@ -1,7 +1,3 @@
-
-
-
-
 // import React, {useState} from 'react';
 // import {View, TouchableOpacity, Text} from 'react-native';
 // import {Agenda} from 'react-native-calendars';
@@ -517,38 +513,6 @@ const CalendarScreen = () => {
     setCustomHeaderNewMonth(false);
   };
 
-  const renderCalendarWithCustomHeader = () => {
-    // const CustomHeader = React.forwardRef((props, ref) => {
-    //   customHeaderProps.current = props;
-      
-    //   return (
-    //     // @ts-expect-error
-    //     <View ref={ref} {...props} style={styles.customHeader}>
-    //       <TouchableOpacity onPress={movePrevious}>
-    //         <Text>Previous</Text>
-    //       </TouchableOpacity>
-    //       <Text>Custom header!</Text>
-    //       <Text>{currentMonth}</Text>
-    //       <TouchableOpacity onPress={moveNext}>
-    //         <Text>Next</Text>
-    //       </TouchableOpacity>
-    //     </View>
-    //   );
-    // });
-
-    return (
-      <Fragment>
-        <Text style={styles.text}>Calendar with custom header component</Text>
-        <Calendar
-          initialDate={INITIAL_DATE}
-          testID={testIDs.calendars.LAST}
-          style={[styles.calendar, styles.customCalendar]}
-          //customHeader={CustomHeader}
-        />
-      </Fragment>
-    );
-  };
-
   const renderCalendarWithInactiveDays = () => {
     return (
       <Fragment>
@@ -570,6 +534,26 @@ const CalendarScreen = () => {
     );
   };
 
+  const renderFinalCalendar = () => {
+    return (
+      <Fragment>
+        <Text style={styles.text}>Final Calendar</Text>
+        <Calendar
+          style={styles.calendar}
+          current={INITIAL_DATE}
+          firstDay={1}
+          markedDates={{
+            [getDate(-1)]: {selected: true, marked: true, disableTouchEvent: true},
+            [getDate(7)]: {selected: true, marked: true, dotColor: 'red'},
+            [getDate(8)]: {marked: true, dotColor: 'red', disableTouchEvent: true},
+            [getDate(9)]: {marked: true},
+            [getDate(10)]: {disabled: true, activeOpacity: 0, disableTouchEvent: false}
+          }}
+        />
+      </Fragment>
+    );
+  };
+
   const renderExamples = () => {
     return (
       <Fragment>
@@ -579,23 +563,24 @@ const CalendarScreen = () => {
         {renderCalendarWithCustomDay()}
         {renderCalendarWithInactiveDays()}
         {renderCalendarWithCustomHeaderTitle()}
-        {renderCalendarWithCustomHeader()}
         {renderCalendarWithMarkedDatesAndHiddenArrows()}
         {renderCalendarWithMultiDotMarking()}
         {renderCalendarWithPeriodMarkingAndSpinner()}
         {renderCalendarWithPeriodMarkingAndDotMarking()}
         {renderCalendarWithMultiPeriodMarking()}
         {renderCalendarWithCustomMarkingType()}
+        {renderFinalCalendar()}
       </Fragment>
     );
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} testID={testIDs.calendars.CONTAINER}>
+    <ScrollView showsVerticalScrollIndicator={true} testID={testIDs.calendars.CONTAINER}>
       {renderExamples()}
     </ScrollView>
   );
 };
+
 
 export default CalendarScreen;
 
