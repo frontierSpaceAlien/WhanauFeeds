@@ -33,7 +33,7 @@ export default function InviteWhanauScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.background}>
-      <Text style={styles.header}>Please choose members to invite</Text>
+      <Text style={styles.header}>Choose friends to invite</Text>
       <FlatList
         keyExtractor={(item) => item.id}
         data={data}
