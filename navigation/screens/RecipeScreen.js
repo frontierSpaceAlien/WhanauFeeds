@@ -55,10 +55,24 @@ export default function RecipeScreen({ navigation }) {
     })
   );
 
+  const ItemSerparator = () => {
+    return (
+      <View
+        style={{
+          height: 2,
+          width: "60%",
+          backgroundColor: "tomato",
+          marginStart: "20%",
+        }}
+      />
+    );
+  };
+
   return (
     <React.Fragment>
       <View style={styles.FriendCard}>
         <FlatList
+          ItemSeparatorComponent={ItemSerparator}
           keyExtractor={(item) => item.id}
           data={recipeState}
           extraData={recipeState}
@@ -84,22 +98,29 @@ export default function RecipeScreen({ navigation }) {
                   }
                 );
               }}
+              style={styles.RecipeCard}
             >
-              <Text>
+              <Text style={{ paddingVertical: 20 }}>
                 <View style={styles.recipeTitle}>
                   <Image
                     source={require("../../assets/favicon.png")}
-                    style={{ width: 40, height: 40, borderRadius: 40 / 2 }}
+                    style={{ width: 60, height: 60, borderRadius: 60 / 2 }}
                   />
-                  <Text style={{ paddingLeft: 100 }}>
-                    {item.id + 1 + ". " + item.recipeName}
+                  <Text
+                    style={{
+                      flexDirection: "column",
+                      paddingHorizontal: 20,
+                      maxWidth: 320,
+                    }}
+                  >
+                    <Text style={{ fontWeight: "bold" }}>
+                      {item.recipeName}
+                    </Text>
+                    <Text>
+                      {item.recipeTags === "" ? "" : ", " + item.recipeTags}
+                    </Text>
+                    {"\n" + item.recipeDescription}
                   </Text>
-                </View>
-                <View>
-                  <Text>{item.recipeDescription}</Text>
-                </View>
-                <View>
-                  <Text>{item.recipeTags}</Text>
                 </View>
               </Text>
             </TouchableOpacity>
@@ -111,7 +132,7 @@ export default function RecipeScreen({ navigation }) {
           color="tomato"
           overlayColor="transparent"
           onPressItem={(name) => {
-            navigation.navigate("Add Friend");
+            navigation.navigate("Add Recipe");
           }}
         />
       </View>
@@ -131,7 +152,7 @@ const actions = [
     text: "Add Recipe",
     name: "bt_friend",
     color: "tomato",
-    icon: <Ionicons name="ios-person-add-outline" />,
+    icon: <Ionicons name="fast-food-outline" />,
     position: 1,
   },
 ];
@@ -143,27 +164,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  FriendCard: {
+  RecipeCard: {
     flex: 1,
     backgroundColor: "white",
     paddingHorizontal: 10,
     fontWeight: "bold",
   },
-  nameBox: {
-    paddingLeft: 10,
-    paddingBottom: 7,
-  },
-  avatarBox: {
-    alignContent: "center",
-    paddingTop: 10,
-  },
   recipeTitle: {
     paddingLeft: 10,
-    paddingBottom: 10,
+    paddingVertical: 10,
     flexDirection: "row",
     allignItems: "center",
     justifyContent: "center",
   },
-  recipeDesc: {},
-  recipeTagStyle: {},
 });
