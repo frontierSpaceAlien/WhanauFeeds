@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Component } from "react";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -6,41 +6,61 @@ import {
   SafeAreaView,
   Text,
   FlatList,
-  TouchableOpacity,
   View,
 } from "react-native";
 import UserAvatar from "react-native-user-avatar";
 import Contact from "../../FriendList/dummy_data/friends";
+import Checkbox from "expo-checkbox";
 
 export default function InviteWhanauScreen({ navigation }) {
-  const [isActive, setIsActive] = useState(false);
+  const [data, setdata] = useState(Contact);
+
+  const onChangeValue = (item) => {
+    const newData = data.map((newItem) => {
+      if (newItem.id == item.id) {
+        return {
+          ...newItem,
+          selected: !newItem.selected,
+        };
+      }
+      return {
+        ...newItem,
+        selected: newItem.selected,
+      };
+    });
+    setdata(newData);
+  };
 
   return (
     <SafeAreaView style={styles.background}>
       <Text style={styles.header}>Please choose members to invite</Text>
       <FlatList
         keyExtractor={(item) => item.id}
-        data={Contact}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => {
-              setIsActive((current) => !current);
-            }}
-          >
-            <Text>
-              <View style={styles.avatarBox}>
-                <UserAvatar
-                  size={32}
-                  name={item.firstName + " " + item.lastName}
-                />
-              </View>
-              <View>
-                <Text style={styles.nameBox}>
-                  {item.firstName + " " + item.lastName}
-                </Text>
-              </View>
-            </Text>
-          </TouchableOpacity>
+        data={data}
+        renderItem={({ item, index }) => (
+          <Text>
+            <View>
+              <Checkbox
+                style={styles.ckItem}
+                disabled={false}
+                value={item.selected}
+                onValueChange={() => {
+                  onChangeValue(item);
+                }}
+              />
+            </View>
+            <View style={styles.avatarBox}>
+              <UserAvatar
+                size={32}
+                name={item.firstName + " " + item.lastName}
+              />
+            </View>
+            <View>
+              <Text style={styles.nameBox}>
+                {item.firstName + " " + item.lastName}
+              </Text>
+            </View>
+          </Text>
         )}
       />
     </SafeAreaView>
@@ -65,5 +85,9 @@ const styles = StyleSheet.create({
   avatarBox: {
     alignContent: "center",
     paddingTop: 10,
+  },
+  ckItem: {
+    marginHorizontal: 10,
+    marginBottom: 7,
   },
 });
