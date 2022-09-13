@@ -7,6 +7,8 @@ import {
   SectionList,
   View,
 } from "react-native";
+import { FloatingAction } from "react-native-floating-action";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import WHANAU from "../../WhanauDummyData/whanauData";
 import UserAvatar from "react-native-user-avatar";
 
@@ -38,9 +40,27 @@ export default function WhanauScreen({ navigation }) {
           <Text style={styles.header}>{title}</Text>
         )}
       />
+      <FloatingAction
+        actions={actions}
+        color="tomato"
+        overlayColor="transparent"
+        onPressItem={(name) => {
+          navigation.navigate("Invite Whanau");
+        }}
+      />
     </SafeAreaView>
   );
 }
+
+const actions = [
+  {
+    text: "Invite Whanau",
+    name: "bt_whanau",
+    color: "tomato",
+    icon: <AntDesign name="addusergroup" />,
+    position: 1,
+  },
+];
 
 const styles = StyleSheet.create({
   background: {
