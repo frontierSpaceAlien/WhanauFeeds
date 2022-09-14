@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, StatusBar, SafeAreaView, Text } from "react-native";
+import { StyleSheet, SafeAreaView, Text } from "react-native";
 
 // for now, shall have only one whanau
 
