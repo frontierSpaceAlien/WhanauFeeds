@@ -35,7 +35,6 @@ let newMembers = [];
 
 export const saveData = (newlist) => {
   newMembers = [...newlist];
-  console.log(newMembers);
 };
 
 export default function WhanauScreen({ navigation }) {
@@ -45,11 +44,9 @@ export default function WhanauScreen({ navigation }) {
     let newlist = [...data[0].data];
 
     newMembers.forEach((element) => {
-      console.log(element);
       newlist.push(element);
     });
 
-    console.log(newlist);
     let newData = [...data];
     newData[0].data = [...newlist];
 

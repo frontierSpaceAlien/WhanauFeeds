@@ -17,6 +17,7 @@ import { saveData } from "./WhanauScreen";
 
 export default function InviteWhanauScreen({ navigation: { goBack } }) {
   const [data, setdata] = useState(Contact);
+  const [enabled, setenabled] = useState(false);
 
   const onChangeValue = (item) => {
     const newData = data.map((newItem) => {
@@ -45,6 +46,16 @@ export default function InviteWhanauScreen({ navigation: { goBack } }) {
     saveData(newMembers);
   };
 
+  // const isEnabled = () => {
+  //   const selected = data.filter((item) => item.selected === true);
+  //   console.log(selected.length);
+  //   if (selected.length < 1) {
+  //     setenabled(false);
+  //   } else {
+  //     setenabled(true);
+  //   }
+  // };
+
   return (
     <SafeAreaView style={styles.background}>
       <Text style={styles.header}>Choose new members to invite</Text>
@@ -60,6 +71,7 @@ export default function InviteWhanauScreen({ navigation: { goBack } }) {
                 value={item.selected}
                 onValueChange={() => {
                   onChangeValue(item);
+                  // isEnabled();
                 }}
               />
             </View>
@@ -80,7 +92,7 @@ export default function InviteWhanauScreen({ navigation: { goBack } }) {
       <Button
         title="Invite"
         color="tomato"
-        disabled={false}
+        disabled={enabled}
         onPress={() => {
           update();
           goBack();
