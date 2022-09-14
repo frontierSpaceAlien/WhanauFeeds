@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -7,6 +7,8 @@ import {
   Text,
   FlatList,
   View,
+  Button,
+  Alert,
 } from "react-native";
 import UserAvatar from "react-native-user-avatar";
 import Contact from "../../FriendList/dummy_data/friends";
@@ -29,6 +31,23 @@ export default function InviteWhanauScreen({ navigation }) {
       };
     });
     setdata(newData);
+  };
+
+  const update = () => {
+    const selected = data.filter((item) => item.selected === true);
+    const newData = selected.map((newItem) => {
+      console.log("Inviting??");
+      return {
+        ...newItem,
+      };
+    });
+
+    newData.forEach((element) => {
+      navigation.navigate("People", {
+        screen: "Whanau",
+        params: { firstName: "HEllo" },
+      });
+    });
   };
 
   return (
@@ -62,6 +81,14 @@ export default function InviteWhanauScreen({ navigation }) {
             </View>
           </Text>
         )}
+      />
+      <Button
+        title="Invite"
+        color="tomato"
+        disabled={false}
+        onPress={() => {
+          update();
+        }}
       />
     </SafeAreaView>
   );

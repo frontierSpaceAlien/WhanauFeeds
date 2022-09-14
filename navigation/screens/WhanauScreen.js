@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { FloatingAction } from "react-native-floating-action";
+import { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import WHANAU from "../../WhanauDummyData/whanauData";
 import UserAvatar from "react-native-user-avatar";
@@ -29,17 +30,20 @@ const Item = ({ title }) => (
   </View>
 );
 
-export default function WhanauScreen({ navigation }) {
+export default function WhanauScreen({ route, navigation }) {
+  const [data, setdata] = useState(WHANAU);
+  const { firstName } = route.params;
   return (
     <SafeAreaView style={styles.background}>
       <SectionList
-        sections={WHANAU}
+        sections={data}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => <Item title={item} />}
         renderSectionHeader={({ section: { title } }) => (
           <Text style={styles.header}>{title}</Text>
         )}
       />
+
       <FloatingAction
         actions={actions}
         color="tomato"
