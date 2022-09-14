@@ -13,8 +13,9 @@ import {
 import UserAvatar from "react-native-user-avatar";
 import Contact from "../../FriendList/dummy_data/friends";
 import Checkbox from "expo-checkbox";
+import { saveData } from "./WhanauScreen";
 
-export default function InviteWhanauScreen({ navigation }) {
+export default function InviteWhanauScreen({ navigation: { goBack } }) {
   const [data, setdata] = useState(Contact);
 
   const onChangeValue = (item) => {
@@ -35,24 +36,18 @@ export default function InviteWhanauScreen({ navigation }) {
 
   const update = () => {
     const selected = data.filter((item) => item.selected === true);
-    const newData = selected.map((newItem) => {
-      console.log("Inviting??");
-      return {
-        ...newItem,
-      };
+    let newMembers = [];
+    selected.forEach((element) => {
+      delete element.selected;
+      element.role = "Member";
+      newMembers.push(element);
     });
-
-    newData.forEach((element) => {
-      navigation.navigate("People", {
-        screen: "Whanau",
-        params: { firstName: "HEllo" },
-      });
-    });
+    saveData(newMembers);
   };
 
   return (
     <SafeAreaView style={styles.background}>
-      <Text style={styles.header}>Choose friends to invite</Text>
+      <Text style={styles.header}>Choose new members to invite</Text>
       <FlatList
         keyExtractor={(item) => item.id}
         data={data}
@@ -88,6 +83,7 @@ export default function InviteWhanauScreen({ navigation }) {
         disabled={false}
         onPress={() => {
           update();
+          goBack();
         }}
       />
     </SafeAreaView>

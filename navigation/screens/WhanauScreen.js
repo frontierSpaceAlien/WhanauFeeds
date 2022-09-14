@@ -12,6 +12,7 @@ import { useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import WHANAU from "../../WhanauDummyData/whanauData";
 import UserAvatar from "react-native-user-avatar";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Item = ({ title }) => (
   <View style={styles.item}>
@@ -30,13 +31,45 @@ const Item = ({ title }) => (
   </View>
 );
 
-export default function WhanauScreen({ route, navigation }) {
+let newMembers = [];
+
+export const saveData = (newlist) => {
+  newMembers = [...newlist];
+  console.log(newMembers);
+};
+
+export default function WhanauScreen({ navigation }) {
   const [data, setdata] = useState(WHANAU);
-  const { firstName } = route.params;
+
+  const updateData = () => {
+    let newlist = [...data[0].data];
+
+    newMembers.forEach((element) => {
+      console.log(element);
+      newlist.push(element);
+    });
+
+    console.log(newlist);
+    let newData = [...data];
+    newData[0].data = [...newlist];
+
+    setdata(newData);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (newMembers.length != 0) {
+        updateData();
+        newMembers = [];
+      }
+    })
+  );
+
   return (
     <SafeAreaView style={styles.background}>
       <SectionList
         sections={data}
+        extraData={data}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => <Item title={item} />}
         renderSectionHeader={({ section: { title } }) => (
