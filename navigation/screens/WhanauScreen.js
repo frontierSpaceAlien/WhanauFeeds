@@ -6,6 +6,8 @@ import {
   Text,
   SectionList,
   View,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import { FloatingAction } from "react-native-floating-action";
 import { useState } from "react";
@@ -14,22 +16,9 @@ import WHANAU from "../../WhanauDummyData/whanauData";
 import UserAvatar from "react-native-user-avatar";
 import { useFocusEffect } from "@react-navigation/native";
 
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <Text>
-      <View style={styles.avatarBox}>
-        <UserAvatar size={32} name={title.firstName + " " + title.lastName} />
-      </View>
-      <View>
-        <Text style={styles.nameBox}>
-          {title.role !== "Member"
-            ? title.firstName + " " + title.lastName + " (" + title.role + ")"
-            : title.firstName + " " + title.lastName}
-        </Text>
-      </View>
-    </Text>
-  </View>
-);
+/*Additional features to work on: 
+// Currently only able to add and delete users from My Whanau
+*/
 
 let newMembers = [];
 
@@ -60,6 +49,70 @@ export default function WhanauScreen({ navigation }) {
         newMembers = [];
       }
     })
+  );
+
+  const removeItem = (title) => {
+    const filteredMyWhanau = data[0].data.filter(
+      (item) => item.id !== title.id
+    );
+    let newData = [...data];
+    newData[0].data = [...filteredMyWhanau];
+    setdata(newData);
+  };
+
+  const Item = ({ title }) => (
+    <View style={styles.item}>
+      <TouchableOpacity
+        onLongPress={() => {
+          if (title.role != "Owner") {
+            Alert.alert(
+              "Confirm",
+              "Are you sure you want to delete this member?",
+              [
+                {
+                  text: "Yes",
+                  onPress: () => removeItem(title),
+                  style: "default",
+                },
+                {
+                  text: "Cancel",
+                  style: "cancel",
+                },
+              ],
+              {
+                cancelable: true,
+              }
+            );
+          } else {
+            Alert.alert(
+              "ERROR",
+              "Unable to delete yourself from your own Whanau"
+            );
+          }
+        }}
+      >
+        <Text>
+          <View style={styles.avatarBox}>
+            <UserAvatar
+              size={32}
+              name={title.firstName + " " + title.lastName}
+            />
+          </View>
+          <View>
+            <Text style={styles.nameBox}>
+              {title.role !== "Member"
+                ? title.firstName +
+                  " " +
+                  title.lastName +
+                  " (" +
+                  title.role +
+                  ")"
+                : title.firstName + " " + title.lastName}
+            </Text>
+          </View>
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 
   return (
