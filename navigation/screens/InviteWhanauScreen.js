@@ -15,9 +15,15 @@ import Contact from "../../FriendList/dummy_data/friends";
 import Checkbox from "expo-checkbox";
 import { saveData } from "./WhanauScreen";
 
+/*Addtional features to work on: 
+//Need to change used data to friend's screen data to sync updates of friends data and invite list data.
+//No checking of friends already in Whanau.
+//Disable invite button when no checkboxes are selected??
+*/
+
 export default function InviteWhanauScreen({ navigation: { goBack } }) {
   const [data, setdata] = useState(Contact);
-  const [enabled, setenabled] = useState(false);
+  const [isdisabled, setisdisabled] = useState(false); //For disabling button
 
   const onChangeValue = (item) => {
     const newData = data.map((newItem) => {
@@ -37,22 +43,29 @@ export default function InviteWhanauScreen({ navigation: { goBack } }) {
 
   const update = () => {
     const selected = data.filter((item) => item.selected === true);
-    let newMembers = [];
-    selected.forEach((element) => {
-      delete element.selected;
-      element.role = "Member";
-      newMembers.push(element);
-    });
-    saveData(newMembers);
+    if (selected.length > 0) {
+      let newMembers = [];
+      selected.forEach((element) => {
+        delete element.selected;
+        element.role = "Member";
+        newMembers.push(element);
+      });
+      saveData(newMembers);
+      goBack();
+    } else {
+      Alert.alert("Warning", "No users selected");
+    }
   };
 
+  // INCOMPLETE
+  // Code to disable button if no check boxes are selected
   // const isEnabled = () => {
   //   const selected = data.filter((item) => item.selected === true);
   //   console.log(selected.length);
   //   if (selected.length < 1) {
-  //     setenabled(false);
+  //     setisdisabled(false);
   //   } else {
-  //     setenabled(true);
+  //     setisdisabled(true);
   //   }
   // };
 
@@ -92,10 +105,9 @@ export default function InviteWhanauScreen({ navigation: { goBack } }) {
       <Button
         title="Invite"
         color="tomato"
-        disabled={enabled}
+        disabled={isdisabled}
         onPress={() => {
           update();
-          goBack();
         }}
       />
     </SafeAreaView>
