@@ -13,6 +13,7 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^15.6.0",
     "@react-navigation/bottom-tabs": "^6.3.3",
     "@react-navigation/material-top-tabs": "^6.2.3",
     "@react-navigation/native": "^6.0.12",
