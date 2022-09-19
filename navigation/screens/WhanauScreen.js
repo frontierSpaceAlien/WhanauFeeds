@@ -132,6 +132,7 @@ export default function WhanauScreen({ navigation }) {
         color="tomato"
         overlayColor="transparent"
         onPressItem={(name) => {
+          //Pass data to InviteWhanau Screen here to compare friends already in the Whanau
           navigation.navigate("Invite Whanau");
         }}
       />
