@@ -72,6 +72,7 @@ export default function AddFriendScreen({navigation: {goBack}}){
           onPress={
             handleSubmit(()=>{
               onSubmit()
+              // probably add alert or something idk
               goBack()
             })
           }
