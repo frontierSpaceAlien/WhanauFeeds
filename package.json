@@ -13,6 +13,8 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@react-navigation/bottom-tabs": "^6.3.3",
     "@react-navigation/material-top-tabs": "^6.2.3",
     "@react-navigation/native": "^6.0.12",
@@ -22,6 +24,7 @@
     "@types/react-native": "~0.69.1",
     "expo": "~46.0.9",
     "expo-status-bar": "~1.4.0",
+    "framer-motion": "^6.5.1",
     "prop-types": "^15.8.1",
     "react": "18.0.0",
     "react-hook-form": "^7.35.0",

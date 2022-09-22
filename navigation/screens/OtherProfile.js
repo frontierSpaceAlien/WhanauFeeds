@@ -1,33 +1,88 @@
-import React, {useState} from "react";
-import { StyleSheet, StatusBar, SafeAreaView, Text, View } from "react-native";
+import React, { useState} from "react";
+import { StyleSheet, Text, View} from "react-native";
 import { Contact } from '../../FriendList/dummy_data/friends';
 import UserAvatar from 'react-native-user-avatar';
+import { useFocusEffect } from "@react-navigation/native";
 
-var IDpass = ""
-var firstName =""
-var lastName = ""
+var IDpass =''
+var firstName=''
+var lastName =''
 
-export default function OtherProfile({ navigation }) {
-  const [contactState, setContact] = useState(Contact);
+// for some reason, everytime the app refreshes, the user avatar breaks.
+// this only happens during development.
+// upon rebuilding the app, the user avatar works.
+export default function OtherProfile({ navigation }){
+  const [contactState, setContact] = useState(Contact)
+
+  
 
   return (
-    <View style = {styles.background}>
-    </View>
-  );
-}
-
+    <View style={styles.container}>
+          <View style={styles.header}></View>
+          <UserAvatar style = {styles.avatar} name = {firstName+" "+lastName} size = {64}/>
+          <View style={styles.body}>
+            <Text style={styles.name}>{firstName+" "+lastName}</Text>
+            <Text style={styles.info}>Food Connoisseur</Text>
+            <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
+        </View>
+      </View>
+    );
+    
+  }
+  
 export function PassID(saveID, fname, lname){
-  IDpass = saveID
-  firstName = fname
-  lastName = lname
-  console.log(IDpass)
+    IDpass = saveID
+    firstName = fname
+    lastName = lname
 }
 
 const styles = StyleSheet.create({
-  background: {
+  header:{
+    backgroundColor: "tomato",
+    height:200,
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom:10,
+    alignSelf:'center',
+    position: 'absolute',
+    marginTop:130
+  },
+  name:{
+    fontSize:22,
+    color:"#FFFFFF",
+    fontWeight:'600',
+  },
+  body:{
+    marginTop:40,
+    alignItems: 'center'
+  },
+  bodyContent: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    padding:30,
+  },
+  name:{
+    fontSize:28,
+    top: 20,
+    color: "black",
+    fontWeight: "600",
+  },
+  info:{
+    fontSize:16,
+    top: 10,
+    color: "black",
+    marginTop:10
+  },
+  description:{
+    fontSize:16,
+    paddingTop: 100,
+    color: "black",
+    marginTop:10,
+    textAlign: 'center'
   },
 });
