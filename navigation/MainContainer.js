@@ -50,7 +50,6 @@ export default function MainContainer() {
         />
 
         <Stack.Screen name={AddFriendName} component = {AddFriendScreen} />
-        <Stack.Screen name={AddFriendName} component={AddFriendScreen} />
         <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
         <Stack.Screen 
         name={OtherProfileName} 
