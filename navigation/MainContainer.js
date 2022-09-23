@@ -15,7 +15,6 @@ import PeopleScreen from "./screens/PeopleScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import AddFriendScreen from "./screens/AddFriendScreen"
-
 // Screen names
 // - then declare a name for the label
 const homeName = "Home";
@@ -31,7 +30,7 @@ const Stack = createStackNavigator();
 
 export default function MainContainer() {
   return (
-    <NavigationContainer>
+
       <Stack.Navigator>
         <Stack.Screen
 // the code breaks if you remove 'name = ...'
@@ -43,7 +42,7 @@ export default function MainContainer() {
         />
         <Stack.Screen name={AddFriendName} component = {AddFriendScreen} />
     </Stack.Navigator>
-    </NavigationContainer>
+    
   );
 }
 
