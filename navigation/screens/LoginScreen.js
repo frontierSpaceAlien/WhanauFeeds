@@ -8,9 +8,9 @@ const LoginScreen = () => {
 
   const navigation = useNavigation()
 
-  useEffect(() => {
-        navigation.replace("Main");
-  }, [])
+//   useEffect(() => {
+//         navigation.replace("Main");
+//   }, [])
 
 //   const handleSignUp = () => {
 //     auth
@@ -33,8 +33,12 @@ const LoginScreen = () => {
 //   }
 
   const handleLogin = () => {
-    
+    navigation.replace("Main");
   }
+
+  const handleSignUp = () => {
+    navigation.replace("Main");
+}
 
   return (
     <KeyboardAvoidingView
@@ -65,7 +69,7 @@ const LoginScreen = () => {
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          //onPress={handleSignUp}
+          onPress={handleSignUp}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
