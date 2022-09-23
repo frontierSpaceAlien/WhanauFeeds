@@ -14,8 +14,10 @@ import RecipeScreen from "./screens/RecipeScreen";
 import PeopleScreen from "./screens/PeopleScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import AddFriendScreen from "./screens/AddFriendScreen";
+import AddFriendScreen from "./screens/AddFriendScreen"
+import OtherProfileScreen from "./screens/OtherProfile";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
+
 
 
 // Screen names
@@ -27,7 +29,9 @@ const peopleName = "People";
 const profileName = "Profile";
 const settingsName = "Settings";
 const AddFriendName = "Add Friend";
+const OtherProfileName = 'Other Profile';
 const AddRecipeName = "Add Recipe";
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -44,9 +48,14 @@ export default function MainContainer() {
             headerShown: false,
           }}
         />
-        <Stack.Screen name={AddFriendName} component={AddFriendScreen} />
+
+        <Stack.Screen name={AddFriendName} component = {AddFriendScreen} />
         <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
-      </Stack.Navigator>
+        <Stack.Screen 
+        name={OtherProfileName} 
+        component = {OtherProfileScreen} 
+        options ={({route}) => ({title: route.params.fullName})}/>
+    </Stack.Navigator>
     </NavigationContainer>
   );
 }
@@ -89,6 +98,7 @@ const BottomNav = () => {
     >
       {/* if adding a new page, lastly add another <Tab.Screen />
         the order of the <Tab.Screen /> components determines the order in the app*/}
+
       <Tab.Screen name={homeName} component={HomeScreen} />
       <Tab.Screen name={calendarName} component={CalendarScreen} />
       <Tab.Screen name={recipeName} component={RecipeScreen} />

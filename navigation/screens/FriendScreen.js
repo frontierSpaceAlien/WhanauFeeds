@@ -5,6 +5,7 @@ import { FloatingAction } from "react-native-floating-action";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Contact from "../../FriendList/dummy_data/friends";
 import { useFocusEffect } from "@react-navigation/native";
+import { PassID } from "./OtherProfile";
 
 var saveID = ""
 var first_Name = ""
@@ -25,6 +26,14 @@ export default function FriendScreen({ navigation }) {
     var arr = [...contactState, {id: saveID, firstName: first_Name, lastName: last_Name}]
     setContact(arr);
   }
+
+  const onPressGoTo = (id,fName,lName) => {
+    PassID(id,fName,lName);
+    navigation.navigate('Other Profile', {
+      fullName: fName+" "+lName
+    })
+  }
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -50,6 +59,7 @@ export default function FriendScreen({ navigation }) {
       extraData={contactState}
       renderItem={({ item }) => (
         <TouchableOpacity
+        onPress={() => onPressGoTo(item.id, item.firstName, item.lastName)}
         onLongPress={() => {
           Alert.alert(
             "Confirm",

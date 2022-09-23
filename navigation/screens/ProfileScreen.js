@@ -1,19 +1,70 @@
 import * as React from "react";
-import { StyleSheet, StatusBar, SafeAreaView, Text } from "react-native";
+import { StyleSheet, StatusBar, View, Text } from "react-native";
+import UserAvatar from 'react-native-user-avatar';
 
 export default function ProfileScreen({ navigation }) {
-  return (
-    <SafeAreaView style={styles.background}>
-      <Text>Profile Screen</Text>
-    </SafeAreaView>
-  );
-}
 
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+    return (
+      <View style={styles.container}>
+            <View style={styles.header}></View>
+            <UserAvatar style = {styles.avatar} name = {"Test User"}size = {64}/>
+            <View style={styles.body}>
+              <Text style={styles.name}>Test User</Text>
+              <Text style={styles.info}>Food Connoisseur</Text>
+              <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
+          </View>
+        </View>
+      );
+      
+    }
+
+  const styles = StyleSheet.create({
+    header:{
+      backgroundColor: "tomato",
+      height:200,
+    },
+    avatar: {
+      width: 130,
+      height: 130,
+      borderRadius: 63,
+      borderWidth: 4,
+      borderColor: "white",
+      marginBottom:10,
+      alignSelf:'center',
+      position: 'absolute',
+      marginTop:130
+    },
+    name:{
+      fontSize:22,
+      color:"#FFFFFF",
+      fontWeight:'600',
+    },
+    body:{
+      marginTop:40,
+      alignItems: 'center'
+    },
+    bodyContent: {
+      flex: 1,
+      alignItems: 'center',
+      padding:30,
+    },
+    name:{
+      fontSize:28,
+      top: 20,
+      color: "black",
+      fontWeight: "600",
+    },
+    info:{
+      fontSize:16,
+      top: 10,
+      color: "black",
+      marginTop:10
+    },
+    description:{
+      fontSize:16,
+      paddingTop: 100,
+      color: "black",
+      marginTop:10,
+      textAlign: 'center'
+    },
+  });
