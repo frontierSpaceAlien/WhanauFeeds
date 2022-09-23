@@ -62,3 +62,6 @@ buck-out/
 .expo
 .expo-shared
 
+.vscode/.react/node_modules%5Cexpo%5CAppEntry.bundle
+.vscode/.react/debuggerWorker.js
+.vscode/.react/AppEntry.map

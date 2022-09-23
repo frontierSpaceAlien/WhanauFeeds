@@ -14,11 +14,10 @@ import RecipeScreen from "./screens/RecipeScreen";
 import PeopleScreen from "./screens/PeopleScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import AddFriendScreen from "./screens/AddFriendScreen"
+import AddFriendScreen from "./screens/AddFriendScreen";
+import InviteWhanauScreen from "./screens/InviteWhanauScreen";
 import OtherProfileScreen from "./screens/OtherProfile";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
-
-
 
 // Screen names
 // - then declare a name for the label
@@ -29,9 +28,9 @@ const peopleName = "People";
 const profileName = "Profile";
 const settingsName = "Settings";
 const AddFriendName = "Add Friend";
-const OtherProfileName = 'Other Profile';
+const InviteWhanauName = "Invite Whanau";
+const OtherProfileName = "Other Profile";
 const AddRecipeName = "Add Recipe";
-
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -48,14 +47,15 @@ export default function MainContainer() {
             headerShown: false,
           }}
         />
-
-        <Stack.Screen name={AddFriendName} component = {AddFriendScreen} />
+        <Stack.Screen name={AddFriendName} component={AddFriendScreen} />
+        <Stack.Screen name={InviteWhanauName} component={InviteWhanauScreen} />
         <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
-        <Stack.Screen 
-        name={OtherProfileName} 
-        component = {OtherProfileScreen} 
-        options ={({route}) => ({title: route.params.fullName})}/>
-    </Stack.Navigator>
+        <Stack.Screen
+          name={OtherProfileName}
+          component={OtherProfileScreen}
+          options={({ route }) => ({ title: route.params.fullName })}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
