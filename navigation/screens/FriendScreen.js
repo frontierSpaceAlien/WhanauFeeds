@@ -17,11 +17,14 @@ export default function FriendScreen({ navigation }) {
   // Need a database to make deleting friends permanent
   // currently the array is only stored temporarily into memory at runtime
   // will reset upon recompiling
+
+  // change to be more efficient
   const removeItem = id => {
     const filteredData = contactState.filter(item => item.id !== id);
     setContact(filteredData);
   }
   
+  // change to be more efficient
   const addItem = () => {
     var arr = [...contactState, {id: saveID, firstName: first_Name, lastName: last_Name}]
     setContact(arr);

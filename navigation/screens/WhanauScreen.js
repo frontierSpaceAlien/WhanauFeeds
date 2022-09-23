@@ -173,4 +173,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
     paddingTop: 7,
   },
+  title: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "56",
+  },
 });

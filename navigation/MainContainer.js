@@ -37,7 +37,7 @@ const Stack = createStackNavigator();
 
 export default function MainContainer() {
   return (
-    <NavigationContainer>
+
       <Stack.Navigator>
         <Stack.Screen
           // the code breaks if you remove 'name = ...'
@@ -56,7 +56,6 @@ export default function MainContainer() {
           options={({ route }) => ({ title: route.params.fullName })}
         />
       </Stack.Navigator>
-    </NavigationContainer>
   );
 }
 
