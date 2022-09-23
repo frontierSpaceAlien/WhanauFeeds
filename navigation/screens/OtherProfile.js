@@ -8,13 +8,11 @@ var IDpass =''
 var firstName=''
 var lastName =''
 
-// for some reason, everytime the app refreshes, the user avatar breaks.
+// for some reason, everytime this class is saved, the user avatar breaks upon fast refresh through expo
 // this only happens during development.
 // upon rebuilding the app, the user avatar works.
 export default function OtherProfile({ navigation }){
   const [contactState, setContact] = useState(Contact)
-
-  
 
   return (
     <View style={styles.container}>
