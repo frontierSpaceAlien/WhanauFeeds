@@ -81,7 +81,7 @@ export default function RecipeScreen({ navigation }) {
               onLongPress={() => {
                 Alert.alert(
                   "Confirm",
-                  "Are you sure you want to delete this friend?",
+                  "Are you sure you want to delete this recipe?",
                   [
                     {
                       text: "Yes",
