@@ -17,11 +17,13 @@ npm install
 npm start
 ```
 Once it has started use these letters to open it.
+Runs the app in an appropriate Android emulator
 ```
 a 
-<!-- Runs the app in an appropriate Android emulator -->
+```
+Runs the app in an appropriate iOS emulator
+```
 i 
-<!-- Runs the app in an appropriate iOS emulator -->
 ```
 Or, you can download the Expo Go app from your application store, scan the QR Code presented in the terminal when the sever starts using your Expo app.
 
