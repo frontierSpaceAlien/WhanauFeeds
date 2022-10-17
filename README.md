@@ -16,12 +16,14 @@ sudo npm i -g expo-cli
 npm install
 npm start
 ```
-Once it has started use these letters to open it.
-Runs the app in an appropriate Android emulator
+
+# Running
+The following arguments used in the terminal to open the app.
+Runs the app in an appropriate Android emulator.
 ```
 a 
 ```
-Runs the app in an appropriate iOS emulator
+Runs the app in an appropriate iOS emulator.
 ```
 i 
 ```
