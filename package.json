@@ -27,7 +27,7 @@
     "checkbox": "^0.0.1",
     "expo": "~46.0.9",
     "expo-checkbox": "~2.2.0",
-    "expo-module-scripts": "^1.1.1",
+    "expo-module-scripts": "^2.1.1",
     "expo-status-bar": "~1.4.0",
     "expo-updates": "~0.14.5",
     "firebase": "^9.6.11",
