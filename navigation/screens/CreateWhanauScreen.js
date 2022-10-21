@@ -6,23 +6,18 @@ import {
   TextInput,
   Button,
   NativeModules,
+  Alert,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { saveNewWhanau } from "./WhanauScreen";
 import WHANAU from "../../WhanauDummyData/whanauData";
 
-export const checkName = (newWhanauName) => {
-  for (let i = 0; i < WHANAU.length; i++) {
-    if (WHANAU[i].title === newWhanauName || newWhanauName === "") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-};
+let whanauName = "";
+let whanauList = [...WHANAU];
 
-module.exports = checkName;
-
+/*
+Code currently doesn't check if whanau name already exists
+*/
 export default function CreateWhanauScreen({ navigation: { goBack } }) {
   const {
     getValues,
@@ -35,8 +30,22 @@ export default function CreateWhanauScreen({ navigation: { goBack } }) {
     },
   });
 
+  const checkName = () => {
+    let invalid = true;
+    for (let i = 0; i < WHANAU.length; i++) {
+      if (whanauList[i].title == whanauName || whanauName == "") {
+        console.log(whanauList[i].title);
+        console.log(whanauName);
+        return invalid;
+      } else {
+        invalid = false;
+      }
+    }
+    return invalid;
+  };
+
   const onSubmit = () => {
-    saveNewWhanau(getValues("whanauName"));
+    saveNewWhanau(whanauName);
   };
 
   const onChange = (arg) => {
@@ -45,9 +54,6 @@ export default function CreateWhanauScreen({ navigation: { goBack } }) {
     };
   };
 
-  console.log("errors", errors);
-
-  // replace the code in the future if implementing a database that searches for users
   return (
     <View style={styles.container}>
       <Text style={styles.label}>*Whanau name</Text>
@@ -61,7 +67,7 @@ export default function CreateWhanauScreen({ navigation: { goBack } }) {
             value={value}
           />
         )}
-        name="whanuName"
+        name="whanauName"
         rules={{ required: true }}
       />
       {errors.firstName && (
@@ -72,10 +78,14 @@ export default function CreateWhanauScreen({ navigation: { goBack } }) {
           color="tomato"
           title="Add"
           onPress={handleSubmit(() => {
-            if (!checkName(getValues("whanauName"))) {
+            whanauName = getValues("whanauName");
+
+            if (!checkName()) {
+              whanauList.push({ title: whanauName, data: [] });
               onSubmit();
-              // probably add alert or something idk
               goBack();
+            } else {
+              Alert.alert("Error", "Whanau Name invalid");
             }
           })}
         />
