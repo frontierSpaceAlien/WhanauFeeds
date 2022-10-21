@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   StyleSheet,
-  StatusBar,
   SafeAreaView,
   Text,
   SectionList,
@@ -21,13 +20,37 @@ import { useFocusEffect } from "@react-navigation/native";
 */
 
 let newMembers = [];
+let newWhanau = "";
+
+export const saveNewWhanau = (whanauName) => {
+  newWhanau = whanauName;
+};
 
 export const saveData = (newlist) => {
   newMembers = [...newlist];
 };
 
 export default function WhanauScreen({ navigation }) {
-  const [data, setdata] = useState(WHANAU);
+  const [data, setData] = useState(WHANAU);
+
+  const addWhanau = () => {
+    let newData = [
+      ...data,
+      {
+        title: newWhanau,
+        data: [
+          {
+            id: 1342,
+            firstName: "My",
+            lastName: "Name",
+            role: "Owner",
+          },
+        ],
+      },
+    ];
+
+    setData(newData);
+  };
 
   const updateData = () => {
     let newlist = [...data[0].data];
@@ -39,7 +62,7 @@ export default function WhanauScreen({ navigation }) {
     let newData = [...data];
     newData[0].data = [...newlist];
 
-    setdata(newData);
+    setData(newData);
   };
 
   useFocusEffect(
@@ -47,6 +70,9 @@ export default function WhanauScreen({ navigation }) {
       if (newMembers.length != 0) {
         updateData();
         newMembers = [];
+      } else if (newWhanau != "") {
+        addWhanau();
+        newWhanau = "";
       }
     })
   );
@@ -57,7 +83,7 @@ export default function WhanauScreen({ navigation }) {
     );
     let newData = [...data];
     newData[0].data = [...filteredMyWhanau];
-    setdata(newData);
+    setData(newData);
   };
 
   const Item = ({ title }) => (
@@ -133,7 +159,11 @@ export default function WhanauScreen({ navigation }) {
         overlayColor="transparent"
         onPressItem={(name) => {
           //Pass data to InviteWhanau Screen here to compare friends already in the Whanau
-          navigation.navigate("Invite Whanau");
+          if (name === "bt_whanau") {
+            navigation.navigate("Invite Whanau");
+          } else if (name === "bt_create") {
+            navigation.navigate("Create Whanau");
+          }
         }}
       />
     </SafeAreaView>
@@ -147,6 +177,13 @@ const actions = [
     color: "tomato",
     icon: <AntDesign name="addusergroup" />,
     position: 1,
+  },
+  {
+    text: "Create Whanau",
+    name: "bt_create",
+    color: "tomato",
+    icon: <AntDesign name="addusergroup" />,
+    position: 2,
   },
 ];
 

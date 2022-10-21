@@ -18,6 +18,7 @@ import AddFriendScreen from "./screens/AddFriendScreen";
 import InviteWhanauScreen from "./screens/InviteWhanauScreen";
 import OtherProfileScreen from "./screens/OtherProfile";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
+import CreateWhanauScreen from "./screens/CreateWhanauScreen";
 
 // Screen names
 // - then declare a name for the label
@@ -29,6 +30,7 @@ const profileName = "Profile";
 const settingsName = "Settings";
 const AddFriendName = "Add Friend";
 const InviteWhanauName = "Invite Whanau";
+const CreateWhanauName = "Create Whanau";
 const OtherProfileName = "Other Profile";
 const AddRecipeName = "Add Recipe";
 
@@ -37,25 +39,25 @@ const Stack = createStackNavigator();
 
 export default function MainContainer() {
   return (
-
-      <Stack.Navigator>
-        <Stack.Screen
-          // the code breaks if you remove 'name = ...'
-          name="DO NOT DELETE"
-          component={BottomNav}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name={AddFriendName} component={AddFriendScreen} />
-        <Stack.Screen name={InviteWhanauName} component={InviteWhanauScreen} />
-        <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
-        <Stack.Screen
-          name={OtherProfileName}
-          component={OtherProfileScreen}
-          options={({ route }) => ({ title: route.params.fullName })}
-        />
-      </Stack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen
+        // the code breaks if you remove 'name = ...'
+        name="DO NOT DELETE"
+        component={BottomNav}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen name={AddFriendName} component={AddFriendScreen} />
+      <Stack.Screen name={InviteWhanauName} component={InviteWhanauScreen} />
+      <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
+      <Stack.Screen name={CreateWhanauName} component={CreateWhanauScreen} />
+      <Stack.Screen
+        name={OtherProfileName}
+        component={OtherProfileScreen}
+        options={({ route }) => ({ title: route.params.fullName })}
+      />
+    </Stack.Navigator>
   );
 }
 
