@@ -15,13 +15,6 @@ import WHANAU from "../../WhanauDummyData/whanauData";
 let whanauName = "";
 let whanauList = [...WHANAU];
 
-const onPressGoTo = (id, fName, lName) => {
-  PassID(id, fName, lName);
-  navigation.navigate("Other Profile", {
-    fullName: fName + " " + lName,
-  });
-};
-
 /*
 Code currently doesn't check if whanau name already exists
 */
