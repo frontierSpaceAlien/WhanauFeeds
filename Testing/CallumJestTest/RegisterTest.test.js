@@ -1,7 +1,7 @@
-import MainContainer from "../../navigation/MainContainer";
+import LoginScreen from "../../navigation/screens/LoginScreen";
 
 test('Given that I open the app, the login/register screen should render', () => {
-    render(<MainContainer />);
+    
     //const app = screen;
     //expect(app).toBeInTheDocument();
   })
