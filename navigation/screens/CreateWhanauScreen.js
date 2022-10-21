@@ -15,6 +15,13 @@ import WHANAU from "../../WhanauDummyData/whanauData";
 let whanauName = "";
 let whanauList = [...WHANAU];
 
+const onPressGoTo = (id, fName, lName) => {
+  PassID(id, fName, lName);
+  navigation.navigate("Other Profile", {
+    fullName: fName + " " + lName,
+  });
+};
+
 /*
 Code currently doesn't check if whanau name already exists
 */
@@ -79,7 +86,6 @@ export default function CreateWhanauScreen({ navigation: { goBack } }) {
           title="Add"
           onPress={handleSubmit(() => {
             whanauName = getValues("whanauName");
-
             if (!checkName()) {
               whanauList.push({ title: whanauName, data: [] });
               onSubmit();

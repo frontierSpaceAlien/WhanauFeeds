@@ -14,6 +14,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import WHANAU from "../../WhanauDummyData/whanauData";
 import UserAvatar from "react-native-user-avatar";
 import { useFocusEffect } from "@react-navigation/native";
+import { PassID } from "./OtherProfile";
 
 /*Additional features to work on: 
 // Currently only able to add and delete users from My Whanau
@@ -86,9 +87,22 @@ export default function WhanauScreen({ navigation }) {
     setData(newData);
   };
 
+  const deleteWhanau = (title) => {
+    const filteredData = data.filter((item) => item.title !== title);
+    setData(filteredData);
+  };
+
+  const onPressGoTo = (id, fName, lName) => {
+    PassID(id, fName, lName);
+    navigation.navigate("Other Profile", {
+      fullName: fName + " " + lName,
+    });
+  };
+
   const Item = ({ title }) => (
     <View style={styles.item}>
       <TouchableOpacity
+        onPress={() => onPressGoTo(title.id, title.firstName, title.lastName)}
         onLongPress={() => {
           if (title.role != "Owner") {
             Alert.alert(
@@ -149,7 +163,40 @@ export default function WhanauScreen({ navigation }) {
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => <Item title={item} />}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
+          <TouchableOpacity
+            onLongPress={() => {
+              let whanauIndex = data.findIndex((item) => {
+                return item.title == title;
+              });
+              console.log(whanauIndex);
+              let accIndex = data[whanauIndex].data.findIndex((item) => {
+                //Need to change code when accounts have been implemented
+                return item.firstName == "My" && item.lastName == "Name";
+              });
+              if (data[whanauIndex].data[accIndex].role == "Owner") {
+                Alert.alert(
+                  "Confirm",
+                  "Are you sure you want to delete this whanu?",
+                  [
+                    {
+                      text: "Yes",
+                      onPress: () => deleteWhanau(title),
+                      style: "default",
+                    },
+                    {
+                      text: "Cancel",
+                      style: "cancel",
+                    },
+                  ],
+                  {
+                    cancelable: true,
+                  }
+                );
+              }
+            }}
+          >
+            <Text style={styles.header}>{title}</Text>
+          </TouchableOpacity>
         )}
       />
 
