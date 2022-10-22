@@ -196,7 +196,7 @@ export default function WhanauScreen({ navigation }) {
               if (data[whanauIndex].data[accIndex].role == "Owner") {
                 Alert.alert(
                   "Confirm",
-                  "Are you sure you want to delete this whanu?",
+                  "Are you sure you want to delete this whanau?",
                   [
                     {
                       text: "Yes",

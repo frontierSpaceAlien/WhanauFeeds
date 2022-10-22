@@ -10,6 +10,12 @@ import {
 import UserAvatar from "react-native-user-avatar";
 import { GetMemberDetails } from "./MemberDetailsScreen";
 
+let user = {
+  id: 1342,
+  firstName: "My",
+  lastName: "Name",
+};
+
 let whanauData = {
   title: "",
   data: [],
@@ -24,6 +30,9 @@ export default function WhanauDetailsScreen({ navigation }) {
     GetMemberDetails(
       whanauData.data.find((item) => {
         return title.id == item.id;
+      }),
+      whanauData.data.find((item) => {
+        return item.id == user.id;
       })
     );
     navigation.navigate("Member Details");
