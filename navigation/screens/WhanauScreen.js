@@ -15,12 +15,19 @@ import WHANAU from "../../WhanauDummyData/whanauData";
 import UserAvatar from "react-native-user-avatar";
 import { useFocusEffect } from "@react-navigation/native";
 import { PassID } from "./OtherProfile";
+import { getWhanauName } from "./WhanauDetailsScreen";
 
 /*Additional features to work on: 
-// Currently only able to add and delete users from My Whanau
+// Currently only able to add to My Whanau
 */
 
+const user = {
+  id: "1342",
+  firstName: "My",
+  lastName: "Name",
+};
 let newMembers = [];
+let chosenWhanau = "";
 let newWhanau = "";
 
 export const saveNewWhanau = (whanauName) => {
@@ -99,6 +106,15 @@ export default function WhanauScreen({ navigation }) {
     });
   };
 
+  const goToWhanauDetails = () => {
+    getWhanauName(
+      data.find((item) => {
+        return chosenWhanau == item.title;
+      })
+    );
+    navigation.navigate("Whanau Details");
+  };
+
   const Item = ({ title }) => (
     <View style={styles.item}>
       <TouchableOpacity
@@ -164,6 +180,10 @@ export default function WhanauScreen({ navigation }) {
         renderItem={({ item }) => <Item title={item} />}
         renderSectionHeader={({ section: { title } }) => (
           <TouchableOpacity
+            onPress={() => {
+              chosenWhanau = title;
+              goToWhanauDetails();
+            }}
             onLongPress={() => {
               let whanauIndex = data.findIndex((item) => {
                 return item.title == title;
@@ -171,7 +191,7 @@ export default function WhanauScreen({ navigation }) {
               console.log(whanauIndex);
               let accIndex = data[whanauIndex].data.findIndex((item) => {
                 //Need to change code when accounts have been implemented
-                return item.firstName == "My" && item.lastName == "Name";
+                return item.id == user.id;
               });
               if (data[whanauIndex].data[accIndex].role == "Owner") {
                 Alert.alert(
