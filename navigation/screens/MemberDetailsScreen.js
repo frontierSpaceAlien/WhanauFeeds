@@ -7,27 +7,44 @@ import {
   Alert,
 } from "react-native";
 import UserAvatar from "react-native-user-avatar";
-
-let user;
-let memberDetails;
+import { useState } from "react";
+let user = {
+  id: "",
+  firstName: "",
+  lastName: "",
+  role: "",
+};
+let memberDetails = {
+  id: "",
+  firstName: "",
+  lastName: "",
+  role: "",
+};
 
 // for some reason, everytime this class is saved, the user avatar breaks upon fast refresh through expo
 // this only happens during development.
 // upon rebuilding the app, the user avatar works.
 export default function MemberDetailsScreen({ navigation }) {
+  const [memberData, setMemberData] = useState(memberDetails);
+
+  const editMemberData = (role) => {
+    //Current changes to role don't change the UI of all screens just member details screen
+    setMemberData({ ...memberData, role: role });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}></View>
       <UserAvatar
         style={styles.avatar}
-        name={memberDetails.firstName + " " + memberDetails.lastName}
+        name={memberData.firstName + " " + memberData.lastName}
         size={64}
       />
       <View style={styles.body}>
         <Text style={styles.name}>
-          {memberDetails.firstName + " " + memberDetails.lastName}
+          {memberData.firstName + " " + memberData.lastName}
         </Text>
-        <Text style={styles.info}>{memberDetails.role}</Text>
+        <Text style={styles.info}>{memberData.role}</Text>
         <Text style={styles.description}>
           Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum
           electram expetendis, omittam deseruisse consequuntur ius an,
@@ -38,8 +55,8 @@ export default function MemberDetailsScreen({ navigation }) {
           onPress={() => {
             if (
               user.role == "Member" ||
-              memberDetails.role == "Owner" ||
-              memberDetails.role == user.role
+              memberData.role == "Owner" ||
+              memberData.role == user.role
             ) {
               Alert.alert("Cannot change member roles");
             } else {
@@ -63,20 +80,22 @@ export default function MemberDetailsScreen({ navigation }) {
                           {
                             text: "Admin",
                             style: "default",
-                            onPress: () => {
-                              console.log(memberDetails.role);
-                              memberDetails.role = "Admin";
-                              console.log(memberDetails.role);
-                            },
+                            onPress: () => editMemberData("Admin"),
+                            //{
+                            //   console.log(memberDetails.role);
+                            //   memberDetails.role = "Admin";
+                            //   console.log(memberDetails.role);
+                            // },
                           },
                           {
                             text: "Member",
                             style: "default",
-                            onPress: () => {
-                              console.log(memberDetails.role);
-                              memberDetails.role = "Member";
-                              console.log(memberDetails.role);
-                            },
+                            onPress: () => editMemberData("Member"),
+                            // {
+                            //   console.log(memberDetails.role);
+                            //   memberDetails.role = "Member";
+                            //   console.log(memberDetails.role);
+                            // },
                           },
                         ],
                         {
