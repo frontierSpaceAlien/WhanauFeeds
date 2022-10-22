@@ -19,15 +19,19 @@ export default function FriendScreen({ navigation }) {
   // will reset upon recompiling
 
   // change to be more efficient
+
+  // I assume by removing the filtered data const,
+  // the function is more efficient
   const removeItem = id => {
-    const filteredData = contactState.filter(item => item.id !== id);
-    setContact(filteredData);
+    setContact(contactState.filter(item => item.id !== id));
   }
   
   // change to be more efficient
+
+  // Same case here, by removing arr,
+  // the function is probably more efficient
   const addItem = () => {
-    var arr = [...contactState, {id: saveID, firstName: first_Name, lastName: last_Name}]
-    setContact(arr);
+    setContact([...contactState, {id: saveID, firstName: first_Name, lastName: last_Name}]);
   }
 
   const onPressGoTo = (id,fName,lName) => {

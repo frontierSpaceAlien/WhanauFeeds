@@ -86,7 +86,7 @@ export default function RecipeScreen({ navigation }) {
 
   // On press, this moves to the SetDifficulty class
   // At the same time it passes the necessary data to display
-  // in SetDifficulty class
+  // in the SetDifficulty class
   const onPressGoTo = (id, rName, rTag, rDesc) => {
     PassRecipeData(id,rName, rTag, rDesc);
     navigation.navigate('Set Difficulty')
@@ -108,7 +108,6 @@ export default function RecipeScreen({ navigation }) {
   // The Edit text is awkwardly placed on the near the top right because of the floating action button.
   // If there are more recipes added to the flatlist, then there needs to be a way
   // to get rid of the floating action button to access the edit text.
-
   return (
     <React.Fragment>
       <View style={styles.RecipeCard}>
