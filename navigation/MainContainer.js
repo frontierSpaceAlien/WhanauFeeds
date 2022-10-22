@@ -19,6 +19,8 @@ import InviteWhanauScreen from "./screens/InviteWhanauScreen";
 import OtherProfileScreen from "./screens/OtherProfile";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
 import CreateWhanauScreen from "./screens/CreateWhanauScreen";
+import WhanauDetailsScreen from "./screens/WhanauDetailsScreen";
+import MemberDetailsScreen from "./screens/MemberDetailsScreen";
 
 // Screen names
 // - then declare a name for the label
@@ -31,8 +33,10 @@ const settingsName = "Settings";
 const AddFriendName = "Add Friend";
 const InviteWhanauName = "Invite Whanau";
 const CreateWhanauName = "Create Whanau";
+const WhanauDetailsName = "Whanau Details";
 const OtherProfileName = "Other Profile";
 const AddRecipeName = "Add Recipe";
+const MemberDetailsName = "Member Details";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -52,6 +56,8 @@ export default function MainContainer() {
       <Stack.Screen name={InviteWhanauName} component={InviteWhanauScreen} />
       <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
       <Stack.Screen name={CreateWhanauName} component={CreateWhanauScreen} />
+      <Stack.Screen name={WhanauDetailsName} component={WhanauDetailsScreen} />
+      <Stack.Screen name={MemberDetailsName} component={MemberDetailsScreen} />
       <Stack.Screen
         name={OtherProfileName}
         component={OtherProfileScreen}
