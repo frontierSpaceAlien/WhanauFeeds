@@ -21,14 +21,17 @@ import { getWhanauName } from "./WhanauDetailsScreen";
 // Currently only able to add to My Whanau
 */
 
+//Dummy data for current user
 const user = {
   id: "1342",
   firstName: "My",
   lastName: "Name",
 };
+
 let newMembers = [];
 let chosenWhanau = "";
 let newWhanau = "";
+let updatedWhanau = "";
 
 export const saveNewWhanau = (whanauName) => {
   newWhanau = whanauName;
@@ -36,6 +39,10 @@ export const saveNewWhanau = (whanauName) => {
 
 export const saveData = (newlist) => {
   newMembers = [...newlist];
+};
+
+export const saveWhanauDetails = (whanau) => {
+  updatedWhanau = whanau;
 };
 
 export default function WhanauScreen({ navigation }) {
@@ -73,6 +80,17 @@ export default function WhanauScreen({ navigation }) {
     setData(newData);
   };
 
+  const updateWhanauDetails = () => {
+    let whanauIndex = data.findIndex((item) => {
+      return updatedWhanau.title == item.title;
+    });
+
+    let newData = [...data];
+    newData[whanauIndex] = { ...updatedWhanau };
+
+    setData(newData);
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       if (newMembers.length != 0) {
@@ -81,6 +99,9 @@ export default function WhanauScreen({ navigation }) {
       } else if (newWhanau != "") {
         addWhanau();
         newWhanau = "";
+      } else if (updatedWhanau != "") {
+        updateWhanauDetails();
+        updatedWhanau = "";
       }
     })
   );

@@ -10,7 +10,7 @@ import {
 import UserAvatar from "react-native-user-avatar";
 import { GetMemberDetails } from "./MemberDetailsScreen";
 import { useFocusEffect } from "@react-navigation/native";
-import { elementType } from "prop-types";
+import { saveWhanauDetails } from "./WhanauScreen";
 
 let user = {
   id: 1342,
@@ -46,6 +46,7 @@ export default function WhanauDetailsScreen({ navigation }) {
       if (changes.id != "") {
         console.log(changes.role);
         updateDetails();
+        saveWhanauDetails({ ...whanauDetails });
         changes = { id: "", firstName: "", lastName: "", role: "" };
       }
     })
