@@ -5,6 +5,7 @@ export const Recipes = [
     recipeDescription: "A pepperoni pizza made with a gluten-free base.",
     recipeTags: "Gluten-Free",
     recipeImage: "",
+    recipeDifficulty: "Not Set"
   },
   {
     id: 1,
@@ -12,6 +13,7 @@ export const Recipes = [
     recipeDescription: "Vegetarian lunch wraps.",
     recipeTags: "Vegetarian",
     recipeImage: "",
+    recipeDifficulty: "Not Set"
   },
   {
     id: 2,
@@ -19,6 +21,7 @@ export const Recipes = [
     recipeDescription: "A steak dinner.",
     recipeTags: "",
     recipeImage: "",
+    recipeDifficulty: "Not Set"
   },
 ];
 

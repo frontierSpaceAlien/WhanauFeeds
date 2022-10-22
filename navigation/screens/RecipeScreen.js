@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Alert,
@@ -8,15 +8,24 @@ import {
   View,
   Image,
 } from "react-native";
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 import Recipes from "../../DummyData/RecipeData";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 import { FloatingAction } from "react-native-floating-action";
+import { PassRecipeData } from "./SetDifficulty";
 
 var saveID = "";
+var saveItemID = "";
 var recipe_Name = "";
 var recipe_Desc = "";
 var recipe_Tags = "";
+var recipe_Difficulty = "";
 
 export default function RecipeScreen({ navigation }) {
   const [recipeState, setRecipe] = useState(Recipes);
@@ -34,10 +43,21 @@ export default function RecipeScreen({ navigation }) {
         recipeName: recipe_Name,
         recipeDescription: recipe_Desc,
         recipeTags: recipe_Tags,
+        recipeDifficulty: "No Difficulty Set"
       },
     ];
     setRecipe(arr);
   };
+
+  function handleDifficultyChange(id){
+    const newDiff = recipeState.map(item => {
+      if (item.id == id){
+        return {...item, recipeDifficulty: recipe_Difficulty}
+      }
+      return item;
+    })
+    setRecipe(newDiff)
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -52,8 +72,19 @@ export default function RecipeScreen({ navigation }) {
         recipe_Desc = "";
         recipe_Tags = "";
       }
+      if (recipe_Difficulty == ""){
+        console.log("No difficulty data")
+      }else {
+        handleDifficultyChange(saveItemID)
+        recipe_Difficulty = ""
+      }
     })
   );
+
+  const onPressGoTo = (id, rName, rTag, rDesc) => {
+    PassRecipeData(id,rName, rTag, rDesc);
+    navigation.navigate('Set Difficulty')
+  }
 
   const ItemSerparator = () => {
     return (
@@ -68,9 +99,13 @@ export default function RecipeScreen({ navigation }) {
     );
   };
 
+  // The Edit text is awkwardly placed on the near the top right because of the floating action button.
+  // If there are more recipes added to the flatlist, then there needs to be a way
+  // to get rid of the floating action button to access the edit text.
+
   return (
     <React.Fragment>
-      <View style={styles.FriendCard}>
+      <View style={styles.RecipeCard}>
         <FlatList
           ItemSeparatorComponent={ItemSerparator}
           keyExtractor={(item) => item.id}
@@ -78,9 +113,9 @@ export default function RecipeScreen({ navigation }) {
           extraData={recipeState}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onLongPress={() => {
-                Alert.alert(
-                  "Confirm",
+            onLongPress={() => {
+              Alert.alert(
+                "Confirm",
                   "Are you sure you want to delete this recipe?",
                   [
                     {
@@ -120,8 +155,24 @@ export default function RecipeScreen({ navigation }) {
                       {item.recipeTags === "" ? "" : ", " + item.recipeTags}
                     </Text>
                     {"\n" + item.recipeDescription}
+                  <Text style = {styles.difficultyStyle}>
+                    {"\n\nDifficulty: "+item.recipeDifficulty}
+                  </Text>
                   </Text>
                 </View>
+              </Text>
+              <Text style = {styles.editOption}>
+                <Menu>
+                  <MenuTrigger text='Edit' />
+                  <MenuOptions>
+                    <MenuOption onSelect={() => {
+                      onPressGoTo(item.id, item.recipeName, item.recipeTags, item.recipeDescription)
+                    }} 
+                          text='Set Difficulty' />
+                    <MenuOption onSelect={() => alert(`do something rating`)} 
+                          text = 'Set Rating' />
+                  </MenuOptions>
+                </Menu>
               </Text>
             </TouchableOpacity>
           )}
@@ -145,6 +196,11 @@ export function saveData(id, recipeName, recipeDescription, recipeTags) {
   recipe_Name = recipeName;
   recipe_Desc = recipeDescription;
   recipe_Tags = recipeTags;
+}
+
+export function saveRecipeDifficulty(id, recipeDifficulty){
+  saveItemID = id
+  recipe_Difficulty = recipeDifficulty;
 }
 
 const actions = [
@@ -177,4 +233,11 @@ const styles = StyleSheet.create({
     allignItems: "center",
     justifyContent: "center",
   },
+  editOption:{
+    bottom: 120,
+    left: 300
+  },
+  difficultyStyle:{
+    bottom: 32
+  }
 });
