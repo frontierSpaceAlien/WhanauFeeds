@@ -209,7 +209,6 @@ export default function WhanauScreen({ navigation }) {
               let whanauIndex = data.findIndex((item) => {
                 return item.title == title;
               });
-              console.log(whanauIndex);
               let accIndex = data[whanauIndex].data.findIndex((item) => {
                 //Need to change code when accounts have been implemented
                 return item.id == user.id;

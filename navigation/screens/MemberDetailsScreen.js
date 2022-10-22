@@ -86,11 +86,6 @@ export default function MemberDetailsScreen({ navigation }) {
                               editMemberData("Admin"),
                                 saveChanges({ ...memberData, role: "Admin" });
                             },
-                            //{
-                            //   console.log(memberDetails.role);
-                            //   memberDetails.role = "Admin";
-                            //   console.log(memberDetails.role);
-                            // },
                           },
                           {
                             text: "Member",
@@ -99,11 +94,6 @@ export default function MemberDetailsScreen({ navigation }) {
                               editMemberData("Member"),
                                 saveChanges({ ...memberData, role: "Member" });
                             },
-                            // {
-                            //   console.log(memberDetails.role);
-                            //   memberDetails.role = "Member";
-                            //   console.log(memberDetails.role);
-                            // },
                           },
                         ],
                         {
