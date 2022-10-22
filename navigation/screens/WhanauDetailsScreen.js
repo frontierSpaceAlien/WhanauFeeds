@@ -9,11 +9,20 @@ import {
 } from "react-native";
 import UserAvatar from "react-native-user-avatar";
 import { GetMemberDetails } from "./MemberDetailsScreen";
+import { useFocusEffect } from "@react-navigation/native";
+import { elementType } from "prop-types";
 
 let user = {
   id: 1342,
   firstName: "My",
   lastName: "Name",
+};
+
+let changes = {
+  id: "",
+  firstName: "",
+  lastName: "",
+  role: "",
 };
 
 let whanauData = {
@@ -25,13 +34,45 @@ export function getWhanauName(data) {
   whanauData = data;
 }
 
+export function saveChanges(data) {
+  changes = data;
+}
+
 export default function WhanauDetailsScreen({ navigation }) {
+  const [whanauDetails, setWhanauDetails] = useState(whanauData);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (changes.id != "") {
+        console.log(changes.role);
+        updateDetails();
+        changes = { id: "", firstName: "", lastName: "", role: "" };
+      }
+    })
+  );
+
+  const updateDetails = () => {
+    let member = whanauDetails.data.find((item) => {
+      return item.id == changes.id;
+    });
+
+    let memberIndex = whanauDetails.data.findIndex((item) => {
+      return item.id == changes.id;
+    });
+
+    if (member.role != changes.role) {
+      whanauDetails.data[memberIndex].role = changes.role;
+    }
+
+    setWhanauDetails({ ...whanauDetails });
+  };
+
   const goToMemberDetails = (title) => {
     GetMemberDetails(
-      whanauData.data.find((item) => {
+      whanauDetails.data.find((item) => {
         return title.id == item.id;
       }),
-      whanauData.data.find((item) => {
+      whanauDetails.data.find((item) => {
         return item.id == user.id;
       })
     );
@@ -68,7 +109,7 @@ export default function WhanauDetailsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>{whanauData.title}</Text>
+        <Text style={styles.title}>{whanauDetails.title}</Text>
       </View>
       <View style={styles.body}>
         <Text style={styles.details}>
@@ -78,7 +119,7 @@ export default function WhanauDetailsScreen({ navigation }) {
         <View>
           <FlatList
             keyExtractor={(item) => item.id}
-            data={whanauData.data}
+            data={whanauDetails.data}
             renderItem={({ item }) => <Item title={item} />}
           />
         </View>

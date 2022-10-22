@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import UserAvatar from "react-native-user-avatar";
 import { useState } from "react";
+import { saveChanges } from "./WhanauDetailsScreen";
+
 let user = {
   id: "",
   firstName: "",
@@ -80,7 +82,10 @@ export default function MemberDetailsScreen({ navigation }) {
                           {
                             text: "Admin",
                             style: "default",
-                            onPress: () => editMemberData("Admin"),
+                            onPress: () => {
+                              editMemberData("Admin"),
+                                saveChanges({ ...memberData, role: "Admin" });
+                            },
                             //{
                             //   console.log(memberDetails.role);
                             //   memberDetails.role = "Admin";
@@ -90,7 +95,10 @@ export default function MemberDetailsScreen({ navigation }) {
                           {
                             text: "Member",
                             style: "default",
-                            onPress: () => editMemberData("Member"),
+                            onPress: () => {
+                              editMemberData("Member"),
+                                saveChanges({ ...memberData, role: "Member" });
+                            },
                             // {
                             //   console.log(memberDetails.role);
                             //   memberDetails.role = "Member";
