@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Alert,
@@ -16,6 +16,7 @@ import {
 } from 'react-native-popup-menu';
 import Recipes from "../../DummyData/RecipeData";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { AirbnbRating } from 'react-native-ratings';
 import { useFocusEffect } from "@react-navigation/native";
 import { FloatingAction } from "react-native-floating-action";
 import { PassRecipeData } from "./SetDifficulty";
@@ -43,12 +44,14 @@ export default function RecipeScreen({ navigation }) {
         recipeName: recipe_Name,
         recipeDescription: recipe_Desc,
         recipeTags: recipe_Tags,
-        recipeDifficulty: "No Difficulty Set"
+        recipeDifficulty: "No Difficulty Set",
       },
     ];
     setRecipe(arr);
   };
 
+// Updates the difficulty of the recipe in the state array.
+// Finds the recipe based on id.
   function handleDifficultyChange(id){
     const newDiff = recipeState.map(item => {
       if (item.id == id){
@@ -81,6 +84,9 @@ export default function RecipeScreen({ navigation }) {
     })
   );
 
+  // On press, this moves to the SetDifficulty class
+  // At the same time it passes the necessary data to display
+  // in SetDifficulty class
   const onPressGoTo = (id, rName, rTag, rDesc) => {
     PassRecipeData(id,rName, rTag, rDesc);
     navigation.navigate('Set Difficulty')
@@ -91,9 +97,9 @@ export default function RecipeScreen({ navigation }) {
       <View
         style={{
           height: 2,
-          width: "60%",
+          width: 220,
           backgroundColor: "tomato",
-          marginStart: "20%",
+          marginStart: 70,
         }}
       />
     );
@@ -139,7 +145,7 @@ export default function RecipeScreen({ navigation }) {
                 <View style={styles.recipeTitle}>
                   <Image
                     source={require("../../assets/favicon.png")}
-                    style={{ width: 60, height: 60, borderRadius: 60 / 2 }}
+                    style={{ width: 60, height: 60, borderRadius: 30 }}
                   />
                   <Text
                     style={{
@@ -167,13 +173,17 @@ export default function RecipeScreen({ navigation }) {
                   <MenuOptions>
                     <MenuOption onSelect={() => {
                       onPressGoTo(item.id, item.recipeName, item.recipeTags, item.recipeDescription)
-                    }} 
-                          text='Set Difficulty' />
-                    <MenuOption onSelect={() => alert(`do something rating`)} 
-                          text = 'Set Rating' />
+                      }} 
+                      text='Set Difficulty' 
+                      />
                   </MenuOptions>
                 </Menu>
               </Text>
+              <AirbnbRating 
+              starContainerStyle = {styles.starStyle}
+              size = {20}
+              defaultRating={0}
+              showRating={false}/>
             </TouchableOpacity>
           )}
           contentContainerStyle={{ backgroundColor: "white" }}
@@ -198,9 +208,12 @@ export function saveData(id, recipeName, recipeDescription, recipeTags) {
   recipe_Tags = recipeTags;
 }
 
+// Saves data from SetDifficulty class
+// This is to ensure the passing of data from that class
+// to update the state array
 export function saveRecipeDifficulty(id, recipeDifficulty){
   saveItemID = id
-  recipe_Difficulty = recipeDifficulty;
+  recipe_Difficulty = recipeDifficulty
 }
 
 const actions = [
@@ -239,5 +252,8 @@ const styles = StyleSheet.create({
   },
   difficultyStyle:{
     bottom: 32
+  },
+  starStyle:{
+    bottom: 30
   }
 });
