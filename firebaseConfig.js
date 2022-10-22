@@ -9,6 +9,7 @@ import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
   apiKey: "AIzaSyBuZLUGbD1RMdFYEDoS1fwKmGWiIDO_aTA",
   authDomain: "whanau-feeds.firebaseapp.com",
+  databaseURL: "https://whanau-feeds-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "whanau-feeds",
   storageBucket: "whanau-feeds.appspot.com",
   messagingSenderId: "864383529593",
