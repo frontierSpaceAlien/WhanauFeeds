@@ -48,7 +48,43 @@ export default function MemberDetailsScreen({ navigation }) {
                 "Change this person's role?",
                 [
                   { text: "Cancel", style: "cancel" },
-                  { text: "Yes", style: "default", onPress: () => {} },
+                  {
+                    text: "Yes",
+                    style: "default",
+                    onPress: () => {
+                      Alert.alert(
+                        "New role",
+                        "Choose new role",
+                        [
+                          {
+                            text: "Cancel",
+                            style: "cancel",
+                          },
+                          {
+                            text: "Admin",
+                            style: "default",
+                            onPress: () => {
+                              console.log(memberDetails.role);
+                              memberDetails.role = "Admin";
+                              console.log(memberDetails.role);
+                            },
+                          },
+                          {
+                            text: "Member",
+                            style: "default",
+                            onPress: () => {
+                              console.log(memberDetails.role);
+                              memberDetails.role = "Member";
+                              console.log(memberDetails.role);
+                            },
+                          },
+                        ],
+                        {
+                          cancelable: true,
+                        }
+                      );
+                    },
+                  },
                 ],
                 {
                   cancelable: true,
