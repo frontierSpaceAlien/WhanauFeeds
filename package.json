@@ -40,6 +40,7 @@
     "react-native-calendars": "^1.1275.0",
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "~2.5.0",
+    "react-native-modal": "^13.0.1",
     "react-native-multiple-select": "^0.5.11",
     "react-native-pager-view": "5.4.24",
     "react-native-paper": "^5.0.0-rc.5",
