@@ -18,6 +18,7 @@ import AddFriendScreen from "./screens/AddFriendScreen";
 import InviteWhanauScreen from "./screens/InviteWhanauScreen";
 import OtherProfileScreen from "./screens/OtherProfile";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
+import SetDifficultyScreen from "./screens/SetDifficulty";
 
 // Screen names
 // - then declare a name for the label
@@ -31,6 +32,7 @@ const AddFriendName = "Add Friend";
 const InviteWhanauName = "Invite Whanau";
 const OtherProfileName = "Other Profile";
 const AddRecipeName = "Add Recipe";
+const SetDifficultyName = "Set Difficulty";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -50,6 +52,7 @@ export default function MainContainer() {
         <Stack.Screen name={AddFriendName} component={AddFriendScreen} />
         <Stack.Screen name={InviteWhanauName} component={InviteWhanauScreen} />
         <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
+        <Stack.Screen name={SetDifficultyName} component={SetDifficultyScreen} />
         <Stack.Screen
           name={OtherProfileName}
           component={OtherProfileScreen}
