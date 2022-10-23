@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import auth from "../../firebaseConfig";
+//import { auth } from "../../firebaseConfig";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
-//console.log("test: " + auth.value);
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -20,35 +21,29 @@ const LoginScreen = () => {
 
   const register = () => {};
 
-  // createUserWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //     // Signed in
-  //     const user = userCredential.user;
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     // ..
-  //   });
-
-  // signInWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //     // Signed in
-  //     const user = userCredential.user;
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //   });
-
   const handleLogin = () => {
    
   };
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBuZLUGbD1RMdFYEDoS1fwKmGWiIDO_aTA",
+    authDomain: "whanau-feeds.firebaseapp.com",
+    databaseURL:
+      "https://whanau-feeds-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "whanau-feeds",
+    storageBucket: "whanau-feeds.appspot.com",
+    messagingSenderId: "864383529593",
+    appId: "1:864383529593:web:a03892bab48b59e8acdaa8",
+    measurementId: "G-4837FZZH3D",
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  const auth = getAuth();
+
   const handleSignUp = () => {
-    auth.createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
     .then(userCredentials => {
       const user = userCredentials.user;
       console.log(user.email);
