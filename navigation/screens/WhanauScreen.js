@@ -28,7 +28,6 @@ const user = {
   lastName: "Name",
 };
 
-let newMembers = [];
 let chosenWhanau = "";
 let newWhanau = "";
 let updatedWhanau = "";
@@ -37,9 +36,9 @@ export const saveNewWhanau = (whanauName) => {
   newWhanau = whanauName;
 };
 
-export const saveData = (newlist) => {
-  newMembers = [...newlist];
-};
+// export const saveData = (newlist) => {
+//   newMembers = [...newlist];
+// };
 
 export const saveWhanauDetails = (whanau) => {
   updatedWhanau = whanau;
@@ -67,19 +66,6 @@ export default function WhanauScreen({ navigation }) {
     setData(newData);
   };
 
-  const updateData = () => {
-    let newlist = [...data[0].data];
-
-    newMembers.forEach((element) => {
-      newlist.push(element);
-    });
-
-    let newData = [...data];
-    newData[0].data = [...newlist];
-
-    setData(newData);
-  };
-
   const updateWhanauDetails = () => {
     let whanauIndex = data.findIndex((item) => {
       return updatedWhanau.title == item.title;
@@ -93,10 +79,7 @@ export default function WhanauScreen({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (newMembers.length != 0) {
-        updateData();
-        newMembers = [];
-      } else if (newWhanau != "") {
+      if (newWhanau != "") {
         addWhanau();
         newWhanau = "";
       } else if (updatedWhanau != "") {
@@ -105,15 +88,6 @@ export default function WhanauScreen({ navigation }) {
       }
     })
   );
-
-  const removeItem = (title) => {
-    const filteredMyWhanau = data[0].data.filter(
-      (item) => item.id !== title.id
-    );
-    let newData = [...data];
-    newData[0].data = [...filteredMyWhanau];
-    setData(newData);
-  };
 
   const deleteWhanau = (title) => {
     const filteredData = data.filter((item) => item.title !== title);
@@ -140,33 +114,6 @@ export default function WhanauScreen({ navigation }) {
     <View style={styles.item}>
       <TouchableOpacity
         onPress={() => onPressGoTo(title.id, title.firstName, title.lastName)}
-        onLongPress={() => {
-          if (title.role != "Owner") {
-            Alert.alert(
-              "Confirm",
-              "Are you sure you want to delete this member?",
-              [
-                {
-                  text: "Yes",
-                  onPress: () => removeItem(title),
-                  style: "default",
-                },
-                {
-                  text: "Cancel",
-                  style: "cancel",
-                },
-              ],
-              {
-                cancelable: true,
-              }
-            );
-          } else {
-            Alert.alert(
-              "ERROR",
-              "Unable to delete yourself from your own Whanau"
-            );
-          }
-        }}
       >
         <Text>
           <View style={styles.avatarBox}>
@@ -246,9 +193,7 @@ export default function WhanauScreen({ navigation }) {
         overlayColor="transparent"
         onPressItem={(name) => {
           //Pass data to InviteWhanau Screen here to compare friends already in the Whanau
-          if (name === "bt_whanau") {
-            navigation.navigate("Invite Whanau");
-          } else if (name === "bt_create") {
+          if (name === "bt_create") {
             navigation.navigate("Create Whanau");
           }
         }}
@@ -259,18 +204,11 @@ export default function WhanauScreen({ navigation }) {
 
 const actions = [
   {
-    text: "Invite Whanau",
-    name: "bt_whanau",
-    color: "tomato",
-    icon: <AntDesign name="addusergroup" />,
-    position: 1,
-  },
-  {
     text: "Create Whanau",
     name: "bt_create",
     color: "tomato",
     icon: <AntDesign name="addusergroup" />,
-    position: 2,
+    position: 1,
   },
 ];
 

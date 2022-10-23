@@ -6,8 +6,11 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import UserAvatar from "react-native-user-avatar";
+import { FloatingAction } from "react-native-floating-action";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import { GetMemberDetails } from "./MemberDetailsScreen";
 import { useFocusEffect } from "@react-navigation/native";
 import { saveWhanauDetails } from "./WhanauScreen";
@@ -30,6 +33,8 @@ let whanauData = {
   data: [],
 };
 
+let newMembers = [];
+
 export function getWhanauName(data) {
   whanauData = data;
 }
@@ -37,20 +42,43 @@ export function getWhanauName(data) {
 export function saveChanges(data) {
   changes = data;
 }
+export const saveData = (newlist) => {
+  newMembers = [...newlist];
+};
 
 export default function WhanauDetailsScreen({ navigation }) {
   const [whanauDetails, setWhanauDetails] = useState(whanauData);
 
   useFocusEffect(
     React.useCallback(() => {
-      if (changes.id != "") {
-        console.log(changes.role);
+      if (newMembers.length != 0) {
+        updateData();
+        saveWhanauDetails({ ...whanauDetails });
+        newMembers = [];
+      } else if (changes.id != "") {
         updateDetails();
         saveWhanauDetails({ ...whanauDetails });
         changes = { id: "", firstName: "", lastName: "", role: "" };
       }
     })
   );
+
+  const removeItem = (title) => {
+    const filteredWhanau = whanauDetails.data.filter(
+      (item) => item.id !== title.id
+    );
+    whanauDetails.data = [...filteredWhanau];
+
+    setWhanauDetails({ ...whanauDetails });
+  };
+
+  const updateData = () => {
+    newMembers.forEach((element) => {
+      whanauDetails.data.push(element);
+    });
+
+    setWhanauDetails({ ...whanauDetails });
+  };
 
   const updateDetails = () => {
     let member = whanauDetails.data.find((item) => {
@@ -82,7 +110,39 @@ export default function WhanauDetailsScreen({ navigation }) {
 
   const Item = ({ title }) => (
     <View style={styles.item}>
-      <TouchableOpacity onPress={() => goToMemberDetails(title)}>
+      <TouchableOpacity
+        onPress={() => goToMemberDetails(title)}
+        onLongPress={() => {
+          let userRole = whanauData.data.find((item) => {
+            return user.id == item.id;
+          });
+          if (title.role != "Owner" && userRole.role != "Member") {
+            Alert.alert(
+              "Confirm",
+              "Are you sure you want to delete this member?",
+              [
+                {
+                  text: "Yes",
+                  onPress: () => {
+                    removeItem(title);
+                    saveWhanauDetails({ ...whanauDetails });
+                  },
+                  style: "default",
+                },
+                {
+                  text: "Cancel",
+                  style: "cancel",
+                },
+              ],
+              {
+                cancelable: true,
+              }
+            );
+          } else {
+            Alert.alert("ERROR", "Unable to delete member");
+          }
+        }}
+      >
         <Text>
           <View style={styles.avatarBox}>
             <UserAvatar
@@ -123,11 +183,33 @@ export default function WhanauDetailsScreen({ navigation }) {
             data={whanauDetails.data}
             renderItem={({ item }) => <Item title={item} />}
           />
+
+          <FloatingAction
+            actions={actions}
+            color="tomato"
+            overlayColor="transparent"
+            onPressItem={(name) => {
+              //Pass data to InviteWhanau Screen here to compare friends already in the Whanau
+              if (name === "bt_whanau") {
+                navigation.navigate("Invite Whanau");
+              }
+            }}
+          />
         </View>
       </View>
     </SafeAreaView>
   );
 }
+
+const actions = [
+  {
+    text: "Invite members",
+    name: "bt_whanau",
+    color: "tomato",
+    icon: <AntDesign name="addusergroup" />,
+    position: 1,
+  },
+];
 
 const styles = StyleSheet.create({
   container: {

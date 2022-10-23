@@ -12,7 +12,7 @@ import {
 import UserAvatar from "react-native-user-avatar";
 import Contact from "../../FriendList/dummy_data/friends";
 import Checkbox from "expo-checkbox";
-import { saveData } from "./WhanauScreen";
+import { saveData } from "./WhanauDetailsScreen";
 
 /*Addtional features to work on: 
 //Need to change used data to friend's screen data to sync updates of friends data and invite list data.
