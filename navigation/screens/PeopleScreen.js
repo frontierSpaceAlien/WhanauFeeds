@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, StatusBar, SafeAreaView, Text, Button, View } from "react-native";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import FriendScreen from "./FriendScreen";
+import FriendScreen from "./FriendScreen.js";
 import WhanauScreen from "./WhanauScreen";
 
 const Tab = createMaterialTopTabNavigator();

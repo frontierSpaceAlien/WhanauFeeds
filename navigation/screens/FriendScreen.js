@@ -1,8 +1,13 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from "react-native";
 import UserAvatar from 'react-native-user-avatar';
-import { FloatingAction } from "react-native-floating-action";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { FloatingAction } from 'react-native-floating-action';
+//import Ionicons from 'react-native-vector-icons/Ionicons';
+//---------------------------------------------------------------------------//
+import Ionicons from "../../node_modules/react-native-vector-icons/Ionicons";
+//---------------------------------------------------------------------------//
+// Uncomment this import ^^ to allow for Friends list adding form testing.
+// Otherwise, keep it commented out for release.
 import Contact from "../../FriendList/dummy_data/friends";
 import { useFocusEffect } from "@react-navigation/native";
 import { PassID } from "./OtherProfile";
@@ -34,13 +39,16 @@ export default function FriendScreen({ navigation }) {
     setContact([...contactState, {id: saveID, firstName: first_Name, lastName: last_Name}]);
   }
 
+  const goToAddFriend = () =>{
+    navigation.navigate("Add Friend")
+  }
+
   const onPressGoTo = (id,fName,lName) => {
     PassID(id,fName,lName);
-    navigation.navigate('Other Profile', {
+    navigation.navigate("Other Profile", {
       fullName: fName+" "+lName
     })
   }
-
 
   useFocusEffect(
     React.useCallback(() => {
@@ -59,7 +67,7 @@ export default function FriendScreen({ navigation }) {
   
   return (
     <React.Fragment>
-    <View style = {styles.FriendCard}>
+    <View style = {styles.FriendCard} testID="FloatingAction">
       <FlatList
       keyExtractor={(item) => item.id}
       data={contactState}
@@ -103,14 +111,14 @@ export default function FriendScreen({ navigation }) {
             </TouchableOpacity>
         )}
         contentContainerStyle ={{backgroundColor: 'white'}}
+        testID = 'Friend'
         />
         <FloatingAction
           actions={actions}
           color = 'tomato'
           overlayColor="transparent"
-          onPressItem ={name => {
-            navigation.navigate('Add Friend')
-          }}
+          onPressItem ={goToAddFriend}
+          testID="FloatingAction"
           />
     </View>
     </React.Fragment>
