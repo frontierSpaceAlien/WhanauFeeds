@@ -9,21 +9,11 @@ import {
   View,
 } from "react-native";
 //import { auth } from "../../firebaseConfig";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-
+//import { firebaseConfig } from "../../firebaseConfig";
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const navigation = useNavigation();
-
-  const register = () => {};
-
-  const handleLogin = () => {
-   
-  };
 
   const firebaseConfig = {
     apiKey: "AIzaSyBuZLUGbD1RMdFYEDoS1fwKmGWiIDO_aTA",
@@ -36,20 +26,42 @@ const LoginScreen = () => {
     appId: "1:864383529593:web:a03892bab48b59e8acdaa8",
     measurementId: "G-4837FZZH3D",
   };
-  
+
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const auth = getAuth();
+  useEffect(() => {
+   const unsubscribe = onAuthStateChanged(auth, user => {
+      if(user) {
+        console.log("debug");
+        console.log(user);
+        navigation.replace("Main");
+      }
+    })
+
+    return unsubscribe;
+  }, [])
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredentials) => {
+      const user = userCredentials.user;
+      console.log("Logged in with: ", user.email);
+    })
+    .catch((error) => alert(error.message));
+  };
 
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
-    .then(userCredentials => {
-      const user = userCredentials.user;
-      console.log(user.email);
-    })
-    .catch(error => alert(error.message))
-    //navigation.replace("Main");
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Registered with: ", user.email);
+      })
+      .catch((error) => alert(error.message));
   };
 
   return (
@@ -58,13 +70,13 @@ const LoginScreen = () => {
         <TextInput
           placeholder="Email"
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
           value={password}
-          onChangeText={text => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
