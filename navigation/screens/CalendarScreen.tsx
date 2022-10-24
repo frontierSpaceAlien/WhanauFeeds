@@ -513,7 +513,8 @@ import Checkbox from 'expo-checkbox';
 const INITIAL_DATE = new Date().toDateString();
 let meals = [];
 let events = [];
-let newEvent = {
+let datesToMark = {};
+let event = {
   date: "",
   title: "",
   description: "",
@@ -525,6 +526,7 @@ const CalendarScreen = ({navigation}) => {
   const [selected, setSelected] = useState(INITIAL_DATE);
   const [modal1Visible, setModal1Visible] = useState(false);
   const [modal2Visible, setModal2Visible] = useState(false);
+  const [eventModal, setEventModal] = useState(false)
   const [text, setText] = useState("");
   const [description, setDescription] = useState("");
   const [selectedWhanau, setSelectedWhanau] = useState(WHANAU[0].title)
@@ -555,21 +557,20 @@ const CalendarScreen = ({navigation}) => {
   const renderFinalCalendar = () => {
 
     const onChangeValue = (item) => {
-    const newData = data.map((newItem) => {
-      if (newItem.id == item.id) {
+      const newData = data.map((newItem) => {
+        if (newItem.id == item.id) {
+          return {
+            ...newItem,
+            selected: !newItem.selected,
+          };
+        }
         return {
           ...newItem,
-          selected: !newItem.selected,
-        };
-      }
-      return {
-        ...newItem,
-        selected: newItem.selected,
-        };
-      });
-      setData(newData);
+          selected: newItem.selected,
+          };
+        });
+        setData(newData);
     };
-
 
     return (
       <Fragment>
@@ -579,21 +580,30 @@ const CalendarScreen = ({navigation}) => {
             <Calendar
               style={styles.calendar}
               current={INITIAL_DATE}
-              onDayPress= {(day) => {onDayPress(day), newEvent.date = day.dateString; setModal1Visible(!modal1Visible)}}
+              onDayPress= {(day) => {onDayPress(day), event.date = day.dateString; setModal1Visible(!modal1Visible)}}
               onDayLongPress = {(day) =>{
                 onDayPress(day)
-                let findEvent = events.find((item) => {
+                 event = events.find((item) => {
                   return item.date == day.dateString;
                 })
 
-                if(findEvent != undefined){
-                  console.log(findEvent)
+                console.log(event)
+
+                if(event != undefined){
+                  setEventModal(!eventModal)
                 } else {
-                  console.log("No event today")
+                  Alert.alert("No Event")
+                  event = {
+                  date: "",
+                  title: "",
+                  description: "",
+                  whanau: "",
+                  meals: [],
+                  }
                 }
               }}
               firstDay={1}
-              markedDates={marked}
+              markedDates={datesToMark}
             />
           </View>
 
@@ -603,7 +613,6 @@ const CalendarScreen = ({navigation}) => {
             transparent={true}
             visible={modal1Visible}
             onRequestClose={() => {
-              Alert.alert("Model has been closed.");
               setModal1Visible(!modal1Visible);
             }}
             >
@@ -632,8 +641,7 @@ const CalendarScreen = ({navigation}) => {
             transparent={false}
             visible={modal2Visible}
             onRequestClose={() => {
-              Alert.alert("Model has been closed.");
-              setModal1Visible(!modal2Visible);
+              setModal2Visible(!modal2Visible);
             }}
             >
                <View style={styles.modal2View}>
@@ -689,17 +697,25 @@ const CalendarScreen = ({navigation}) => {
                   onPress={() => {
                     setModal2Visible(!modal2Visible)
                     // console.log(text);
-                    newEvent.title = text;
+                    event.title = text;
                     // console.log(selectedWhanau)
-                    newEvent.whanau = selectedWhanau;
+                    event.whanau = selectedWhanau;
                     // console.log(description)
-                    newEvent.description = description;
-                    newEvent.meals = data.filter((item) => item.selected === true)
-                    // console.log(meals[0].recipeName)
-                    console.log(newEvent)
-                    events.push(newEvent);
+                    event.description = description;
+                    let mealsData = data.filter((item) => item.selected === true)
+                    mealsData.forEach((meal) => {
+                      event.meals.push(meal.recipeName)
+                    })
 
-                    newEvent = {
+                    // console.log(meals[0].recipeName)
+                    console.log(event)
+                    events.push(event);
+
+                    datesToMark = {...datesToMark, [event.date]: {
+                      marked: true,
+                    }}
+
+                    event = {
                       date: "",
                       title: "",
                       description: "",
@@ -708,7 +724,7 @@ const CalendarScreen = ({navigation}) => {
                     }
 
                     setText("")
-                    setSelectedWhanau("")
+                    setSelectedWhanau(WHANAU[0].title)
                     setDescription("")
                     setData(Recipes)
                     Alert.alert("Event Created")
@@ -718,6 +734,82 @@ const CalendarScreen = ({navigation}) => {
                   </Pressable>
                 </View>
               </View>
+            </Modal>
+          </View>
+
+          <View>
+            <Modal 
+            animationType='slide'
+            transparent={false}
+            visible={eventModal}
+            onRequestClose={() => {
+              setEventModal(!eventModal);
+            }}
+            >
+              <View style={styles.modal2View}>
+                <Text style = {styles.item}> EVENT DETAILS</Text>
+                <Text style = {styles.item}> Title: {event.title}</Text>
+                <Text style = {styles.item}> Description: {event.description}</Text>
+                <Text style = {styles.item}> Invited Whanau: {event.whanau}</Text>
+                <Text style = {styles.item}> Planned Meals: {event.meals}</Text>
+
+                <View style={{flexDirection: "row"}}>
+                  <Pressable
+                  style = {styles.button }
+                  onPress={()=>{setEventModal(!eventModal)  
+                    event = {
+                      date: "",
+                      title: "",
+                      description: "",
+                      whanau: "",
+                      meals: [],
+                    }}}
+                  >
+                    <Text>Back</Text>
+                </Pressable>
+                <Pressable
+                  style = {styles.button }
+                  onPress={()=>{
+                    Alert.alert("Warning", "Do you want to delete this event?",               
+                    [
+                  {
+                  text: "Yes",
+                  onPress: () => {
+
+                    delete datesToMark[event.date]
+                    console.log(datesToMark)
+                    events = events.filter((item) => {
+                      event.date == item.date
+                    })
+                    
+                    event = {
+                      date: "",
+                      title: "",
+                      description: "",
+                      whanau: "",
+                      meals: [],
+                    }
+                    Alert.alert("", "Event deleted")
+                    setEventModal(!eventModal)
+                  },
+                  style: "default",
+                 },
+                 {
+                  text: "Cancel",
+                  style: "cancel",
+                 },
+                ],
+                {
+                cancelable: true,
+                }
+                    )}}
+                  >
+                    <Text>Delete</Text>
+                </Pressable>
+                </View>
+
+              </View>
+              
             </Modal>
           </View>
     
