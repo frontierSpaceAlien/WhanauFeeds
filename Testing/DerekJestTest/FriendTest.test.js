@@ -1,5 +1,5 @@
 import React from 'react';
-import AddFriendScreen from '../../../navigation/screens/AddFriendScreen.js';
+import AddFriendScreen from '../../navigation/screens/AddFriendScreen.js'
 import { render, fireEvent } from '@testing-library/react-native';
 
 describe('Friend List Adding', () => {
