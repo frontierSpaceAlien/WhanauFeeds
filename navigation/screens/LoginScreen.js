@@ -34,7 +34,7 @@ const LoginScreen = () => {
   // Call and store relevant functions
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -42,7 +42,8 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.replace("Main");
+        
+        //navigation.replace("Main");
       }
     });
 
