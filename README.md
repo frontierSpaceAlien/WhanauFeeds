@@ -8,7 +8,7 @@ Must be installed manually.
 
 Node.js
 
-Android studio with appropriate emulator setup for windows or linux users, or Xcode Simulator for iOS users.
+Android studio with appropriate emulator setup for windows or linux users, or Xcode Simulator for Mac users.
 
 # Installation
 
