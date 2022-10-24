@@ -18,6 +18,9 @@ import AddFriendScreen from "./screens/AddFriendScreen";
 import InviteWhanauScreen from "./screens/InviteWhanauScreen";
 import OtherProfileScreen from "./screens/OtherProfile";
 import AddRecipeScreen from "./screens/AddRecipeScreen";
+import CreateWhanauScreen from "./screens/CreateWhanauScreen";
+import WhanauDetailsScreen from "./screens/WhanauDetailsScreen";
+import MemberDetailsScreen from "./screens/MemberDetailsScreen";
 import SetDifficultyScreen from "./screens/SetDifficulty";
 
 // Screen names
@@ -30,8 +33,11 @@ const profileName = "Profile";
 const shoppinglistName = "Shopping List";
 const AddFriendName = "Add Friend";
 const InviteWhanauName = "Invite Whanau";
+const CreateWhanauName = "Create Whanau";
+const WhanauDetailsName = "Whanau Details";
 const OtherProfileName = "Other Profile";
 const AddRecipeName = "Add Recipe";
+const MemberDetailsName = "Member Details";
 const SetDifficultyName = "Set Difficulty";
 
 const Tab = createBottomTabNavigator();
@@ -39,26 +45,28 @@ const Stack = createStackNavigator();
 
 export default function MainContainer() {
   return (
-
-      <Stack.Navigator>
-        <Stack.Screen
-          // the code breaks if you remove 'name = ...'
-          name="DO NOT DELETE"
-          component={BottomNav}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name={AddFriendName} component={AddFriendScreen} />
-        <Stack.Screen name={InviteWhanauName} component={InviteWhanauScreen} />
-        <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
-        <Stack.Screen name={SetDifficultyName} component={SetDifficultyScreen} />
-        <Stack.Screen
-          name={OtherProfileName}
-          component={OtherProfileScreen}
-          options={({ route }) => ({ title: route.params.fullName })}
-        />
-      </Stack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen
+        // the code breaks if you remove 'name = ...'
+        name="DO NOT DELETE"
+        component={BottomNav}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen name={AddFriendName} component={AddFriendScreen} />
+      <Stack.Screen name={InviteWhanauName} component={InviteWhanauScreen} />
+      <Stack.Screen name={AddRecipeName} component={AddRecipeScreen} />
+      <Stack.Screen name={CreateWhanauName} component={CreateWhanauScreen} />
+      <Stack.Screen name={WhanauDetailsName} component={WhanauDetailsScreen} />
+      <Stack.Screen name={MemberDetailsName} component={MemberDetailsScreen} />
+      <Stack.Screen name={SetDifficultyName} component={SetDifficultyScreen} />
+      <Stack.Screen
+        name={OtherProfileName}
+        component={OtherProfileScreen}
+        options={({ route }) => ({ title: route.params.fullName })}
+      />
+    </Stack.Navigator>
   );
 }
 

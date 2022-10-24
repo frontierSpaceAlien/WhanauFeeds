@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.10.4",
     "@react-native-community/checkbox": "^0.5.12",
     "@react-native-firebase/app": "~15.4.0",
+    "@react-native-picker/picker": "^2.4.8",
     "@react-navigation/bottom-tabs": "^6.3.3",
     "@react-navigation/material-top-tabs": "^6.2.3",
     "@react-navigation/native": "^6.0.13",
