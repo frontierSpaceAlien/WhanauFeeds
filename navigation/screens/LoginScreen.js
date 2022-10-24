@@ -1,71 +1,93 @@
-import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { useNavigation } from "@react-navigation/core";
+import React, { useEffect, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
 
-  const navigation = useNavigation()
+  // firebase initalise - this code was not working from its own file,
+// so it is here because this is what works
+  const firebaseConfig = {
+    apiKey: "AIzaSyBuZLUGbD1RMdFYEDoS1fwKmGWiIDO_aTA",
+    authDomain: "whanau-feeds.firebaseapp.com",
+    databaseURL:
+      "https://whanau-feeds-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "whanau-feeds",
+    storageBucket: "whanau-feeds.appspot.com",
+    messagingSenderId: "864383529593",
+    appId: "1:864383529593:web:a03892bab48b59e8acdaa8",
+    measurementId: "G-4837FZZH3D",
+  };
 
-//   useEffect(() => {
-//         navigation.replace("Main");
-//   }, [])
+  // Call and store relevant functions
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-//   const handleSignUp = () => {
-//     auth
-//       .createUserWithEmailAndPassword(email, password)
-//       .then(userCredentials => {
-//         const user = userCredentials.user;
-//         console.log('Registered with:', user.email);
-//       })
-//       .catch(error => alert(error.message))
-//   }
+  // If the user was successfully authenticated, login
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.replace("Main");
+      }
+    });
 
-//   const handleLogin = () => {
-//     auth
-//       .signInWithEmailAndPassword(email, password)
-//       .then(userCredentials => {
-//         const user = userCredentials.user;
-//         console.log('Logged in with:', user.email);
-//       })
-//       .catch(error => alert(error.message))
-//   }
+    return unsubscribe;
+  }, []);
 
+  // Login 
   const handleLogin = () => {
-    navigation.replace("Main");
-  }
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+      })
+      .catch((error) => alert(error.message));
+  };
 
+  // Sign up
   const handleSignUp = () => {
-    navigation.replace("Main");
-}
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+      })
+      .catch((error) => alert(error.message));
+  };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
-    >
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
           value={email}
-          //onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
           value={password}
-          //onChangeText={text => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={handleLogin}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -76,54 +98,54 @@ const LoginScreen = () => {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default LoginScreen
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputContainer: {
-    width: '80%'
+    width: "80%",
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
   },
   buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
-    width: '100%',
+    backgroundColor: "#0782F9",
+    width: "100%",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonOutline: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: "#0782F9",
     borderWidth: 2,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: '700',
+    color: "white",
+    fontWeight: "700",
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
+    color: "#0782F9",
+    fontWeight: "700",
     fontSize: 16,
   },
-})
+});
