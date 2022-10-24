@@ -30,8 +30,6 @@ const CalendarScreen = ({navigation}) => {
   const [selectedWhanau, setSelectedWhanau] = useState(WHANAU[0].title)
   const [data, setData] = useState(Recipes);
 
-  // const [currentMonth, setCurrentMonth] = useState(INITIAL_DATE);
-
   // Get the date chosen
   const getDate = (count: number) => {
     const date = new Date(INITIAL_DATE);
@@ -53,6 +51,7 @@ const CalendarScreen = ({navigation}) => {
     };
   }, [selected]);
 
+  // calendar
   const renderFinalCalendar = () => {
 
     const onChangeValue = (item) => {
@@ -85,9 +84,6 @@ const CalendarScreen = ({navigation}) => {
                  event = events.find((item) => {
                   return item.date == day.dateString;
                 })
-
-                console.log(event)
-
                 if(event != undefined){
                   setEventModal(!eventModal)
                 } else {
