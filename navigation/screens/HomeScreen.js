@@ -1,12 +1,10 @@
 import * as React from "react";
 import { StyleSheet, StatusBar, SafeAreaView, Text } from "react-native";
 import { signOut, getAuth } from "firebase/auth/";
-//import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function HomeScreen({ navigation }) {
-  //const navigation = useNavigation();
-
+  // Sign out 
   const auth = getAuth();
   const handleSignOut = () => {
     signOut(auth)

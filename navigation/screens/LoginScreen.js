@@ -8,13 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-//import { auth } from "../../firebaseConfig";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { initializeApp } from "firebase/app";
-//import { firebaseConfig } from "../../firebaseConfig";
 
 const LoginScreen = () => {
 
+  // firebase initalise - this code was not working from its own file,
+// so it is here because this is what works
   const firebaseConfig = {
     apiKey: "AIzaSyBuZLUGbD1RMdFYEDoS1fwKmGWiIDO_aTA",
     authDomain: "whanau-feeds.firebaseapp.com",
@@ -27,31 +32,34 @@ const LoginScreen = () => {
     measurementId: "G-4837FZZH3D",
   };
 
-  // Initialize Firebase
+  // Call and store relevant functions
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // If the user was successfully authenticated, login
   useEffect(() => {
-   const unsubscribe = onAuthStateChanged(auth, user => {
-      if(user) {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
         navigation.replace("Main");
       }
-    })
+    });
 
     return unsubscribe;
-  }, [])
+  }, []);
 
+  // Login 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
-    .then((userCredentials) => {
-      const user = userCredentials.user;
-    })
-    .catch((error) => alert(error.message));
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+      })
+      .catch((error) => alert(error.message));
   };
 
+  // Sign up
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
