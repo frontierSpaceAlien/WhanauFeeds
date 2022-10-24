@@ -3,6 +3,7 @@ import { StyleSheet, Text, View} from "react-native";
 import { Contact } from '../../FriendList/dummy_data/friends';
 import UserAvatar from 'react-native-user-avatar';
 import { useFocusEffect } from "@react-navigation/native";
+import DietaryRequirements from "../../DummyData/DietaryTags"; 
 
 var IDpass =''
 var firstName=''
@@ -13,6 +14,7 @@ var lastName =''
 // upon rebuilding the app, the user avatar works.
 export default function OtherProfile({ navigation }){
   const [contactState, setContact] = useState(Contact)
+  const dietTag = DietaryRequirements[Math.floor(Math.random() * DietaryRequirements.length)]
 
   return (
     <View style={styles.container}>
@@ -21,6 +23,7 @@ export default function OtherProfile({ navigation }){
           <View style={styles.body}>
             <Text style={styles.name}>{firstName+" "+lastName}</Text>
             <Text style={styles.info}>Food Connoisseur</Text>
+            <Text style={styles.dietInfo}>{dietTag}</Text>
             <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text>
         </View>
       </View>
@@ -82,5 +85,11 @@ const styles = StyleSheet.create({
     color: "black",
     marginTop:10,
     textAlign: 'center'
+  },
+  dietInfo:{
+    fontSize:12,
+    top: 10,
+    color: "black",
+    marginTop:10
   },
 });
