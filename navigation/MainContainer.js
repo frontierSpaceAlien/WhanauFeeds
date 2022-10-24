@@ -12,7 +12,7 @@ import HomeScreen from "./screens/HomeScreen";
 import CalendarScreen from "./screens/CalendarScreen";
 import RecipeScreen from "./screens/RecipeScreen";
 import PeopleScreen from "./screens/PeopleScreen";
-import SettingsScreen from "./screens/SettingsScreen";
+import ShoppingListScreen from "./screens/ShoppingListScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import AddFriendScreen from "./screens/AddFriendScreen";
 import InviteWhanauScreen from "./screens/InviteWhanauScreen";
@@ -21,6 +21,7 @@ import AddRecipeScreen from "./screens/AddRecipeScreen";
 import CreateWhanauScreen from "./screens/CreateWhanauScreen";
 import WhanauDetailsScreen from "./screens/WhanauDetailsScreen";
 import MemberDetailsScreen from "./screens/MemberDetailsScreen";
+import SetDifficultyScreen from "./screens/SetDifficulty";
 
 // Screen names
 // - then declare a name for the label
@@ -29,7 +30,7 @@ const calendarName = "Calendar";
 const recipeName = "Recipes";
 const peopleName = "People";
 const profileName = "Profile";
-const settingsName = "Settings";
+const shoppinglistName = "Shopping List";
 const AddFriendName = "Add Friend";
 const InviteWhanauName = "Invite Whanau";
 const CreateWhanauName = "Create Whanau";
@@ -37,6 +38,7 @@ const WhanauDetailsName = "Whanau Details";
 const OtherProfileName = "Other Profile";
 const AddRecipeName = "Add Recipe";
 const MemberDetailsName = "Member Details";
+const SetDifficultyName = "Set Difficulty";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -58,6 +60,7 @@ export default function MainContainer() {
       <Stack.Screen name={CreateWhanauName} component={CreateWhanauScreen} />
       <Stack.Screen name={WhanauDetailsName} component={WhanauDetailsScreen} />
       <Stack.Screen name={MemberDetailsName} component={MemberDetailsScreen} />
+      <Stack.Screen name={SetDifficultyName} component={SetDifficultyScreen} />
       <Stack.Screen
         name={OtherProfileName}
         component={OtherProfileScreen}
@@ -90,8 +93,8 @@ const BottomNav = () => {
             iconName = focused ? "people" : "people-outline";
           } else if (routeName == profileName) {
             iconName = focused ? "person" : "person-outline";
-          } else if (routeName === settingsName) {
-            iconName = focused ? "settings" : "settings-outline";
+          } else if (routeName === shoppinglistName) {
+            iconName = focused ? "basket" : "basket-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -111,7 +114,7 @@ const BottomNav = () => {
       <Tab.Screen name={recipeName} component={RecipeScreen} />
       <Tab.Screen name={peopleName} component={PeopleScreen} />
       <Tab.Screen name={profileName} component={ProfileScreen} />
-      <Tab.Screen name={settingsName} component={SettingsScreen} />
+      <Tab.Screen name={shoppinglistName} component={ShoppingListScreen} />
     </Tab.Navigator>
   );
 };
