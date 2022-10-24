@@ -4,7 +4,7 @@ import {Calendar, CalendarUtils} from 'react-native-calendars';
 import testIDs from '../testIDs';
 
 // Magic date chosen for demonstration
-const INITIAL_DATE = '2022-09-11';
+const INITIAL_DATE = CalendarUtils.getCalendarDateString(new Date());
 
 const CalendarScreen = () => {
   const [selected, setSelected] = useState(INITIAL_DATE);
