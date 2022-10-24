@@ -17,9 +17,8 @@ import {
 import { initializeApp } from "firebase/app";
 
 const LoginScreen = () => {
-
   // firebase initalise - this code was not working from its own file,
-// so it is here because this is what works
+  // so it is here because this is what works
   const firebaseConfig = {
     apiKey: "AIzaSyBuZLUGbD1RMdFYEDoS1fwKmGWiIDO_aTA",
     authDomain: "whanau-feeds.firebaseapp.com",
@@ -50,7 +49,7 @@ const LoginScreen = () => {
     return unsubscribe;
   }, []);
 
-  // Login 
+  // Login
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
@@ -76,6 +75,7 @@ const LoginScreen = () => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
+          testID="email"
         />
         <TextInput
           placeholder="Password"
@@ -83,11 +83,16 @@ const LoginScreen = () => {
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
+          testID="password"
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
+        <TouchableOpacity
+          testID="login"
+          onPress={handleLogin}
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
