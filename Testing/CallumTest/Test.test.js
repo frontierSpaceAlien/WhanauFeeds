@@ -9,15 +9,15 @@ describe('Test components render for LoginScreen', () => {
         expect(getByTestId("email")).toBeCalled
     });
 
-    test("Email text field button renders", () =>{
-        expect(getByTestId("password")).toBeCalled
-    });
+    // test("Password text field button renders", () =>{
+    //     expect(getByTestId("password")).toBeCalled
+    // });
 
-    test("Login button renders", () =>{
-        expect(getByText("Login")).toBeCalled
-    });
+//     test("Login button renders", () =>{
+//         expect(getByText("Login")).toBeCalled
+//     });
 
-    test("Register button renders", () =>{
-        expect(getByText("Register")).toBeCalled
-   });    
+//     test("Register button renders", () =>{
+//         expect(getByText("Register")).toBeCalled
+//    });    
 })
