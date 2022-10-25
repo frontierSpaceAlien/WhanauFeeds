@@ -90,7 +90,6 @@ const LoginScreen = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          testID="login"
           onPress={handleLogin}
           style={styles.button}
         >

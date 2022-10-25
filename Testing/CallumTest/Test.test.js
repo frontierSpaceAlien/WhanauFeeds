@@ -1,29 +1,19 @@
 import React from 'react';
 import LoginScreen from '../../navigation/screens/LoginScreen.js'
-import { render, fireEvent } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 
-describe('Logging in with valid test data', () => {
-    test("Should log in correctly", () =>{
-        const { getByTestId,  debug } = render(<LoginScreen />)
-        debug();
-        fireEvent.changeText(getByTestId("email"), "callum@clow.net.nz");
-        fireEvent.changeText(getByTestId("password"), "testpassword123");
-        fireEvent.press(getByTestId("login"))
-        expect(onAuthStateChanged()).toBeCalled
-        
-    })
+describe('Test components render for LoginScreen', () => {
+    
 
-    // test("should display to user \"* First name is required\" ", () =>{
-    //     const { getByTestId , getByText, debug } = render(<AddFriendScreen />)
-    //     fireEvent.changeText(getByTestId("lastInput"), "test")
-    //     fireEvent.press(getByTestId("submitButton"))
-    //     expect(getByText("* First name is required.")).toBeCalled
-    // })
+    test("Login button renders", () =>{
+        expect(getByText("Login")).toBeCalled
+    });
 
-    // test("should display to user \"* First name is required\" and \"* Last name is required\" ", () =>{
-    //     const { getByTestId , getByText, debug } = render(<AddFriendScreen />)
-    //     fireEvent.press(getByTestId("submitButton"))
-    //     expect(getByText("* Last name is required.")).toBeCalled
-    //     expect(getByText("* First name is required.")).toBeCalled
-    // })
+    test("Submit button renders", () =>{
+        expect(getByText("Submit")).toBeCalled
+    });
+
+    test("Email text field button renders", () =>{
+        expect(getByTestID("testID")).toBeCalled
+    });
 })
